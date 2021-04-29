@@ -68,7 +68,7 @@ public class Alternatif extends javax.swing.JInternalFrame {
         jPanel1.setOpaque(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Nama Kategors : ");
+        jLabel8.setText("Nama Kategor : ");
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
