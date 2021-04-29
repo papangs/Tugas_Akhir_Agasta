@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : PAPANK
+ Source Server         : Localhost
  Source Server Type    : MySQL
- Source Server Version : 100136
+ Source Server Version : 50625
  Source Host           : localhost:3306
  Source Schema         : tugas_akhir_agasta
 
  Target Server Type    : MySQL
- Target Server Version : 100136
+ Target Server Version : 50625
  File Encoding         : 65001
 
- Date: 29/04/2021 06:51:33
+ Date: 29/04/2021 16:17:26
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `alternatif`  (
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkategoriseq`(`kategori_seq`) USING BTREE,
   CONSTRAINT `fkkategoriseq` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of alternatif
@@ -71,7 +71,7 @@ CREATE TABLE `alternatif_kriteria`  (
   INDEX `kriteria_seq`(`kriteria_seq`) USING BTREE,
   CONSTRAINT `alternatif_seq` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kriteria_seq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of alternatif_kriteria
@@ -226,13 +226,17 @@ CREATE TABLE `bobot_alternatif_kriteria`  (
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `akternatif_kriteria_seq`(`akternatif_kriteria_seq`) USING BTREE,
   CONSTRAINT `akternatif_kriteria_seq` FOREIGN KEY (`akternatif_kriteria_seq`) REFERENCES `alternatif_kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
--- Table structure for eigen
+-- Records of bobot_alternatif_kriteria
 -- ----------------------------
-DROP TABLE IF EXISTS `eigen`;
-CREATE TABLE `eigen`  (
+
+-- ----------------------------
+-- Table structure for eigen_kriteria
+-- ----------------------------
+DROP TABLE IF EXISTS `eigen_kriteria`;
+CREATE TABLE `eigen_kriteria`  (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
   `eigen_value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
@@ -240,17 +244,17 @@ CREATE TABLE `eigen`  (
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkriteria_seq`(`kriteria_seq`) USING BTREE,
   CONSTRAINT `fkkriteria_seq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
--- Records of eigen
+-- Records of eigen_kriteria
 -- ----------------------------
-INSERT INTO `eigen` VALUES (1, '0.202', '2021-04-25', 1);
-INSERT INTO `eigen` VALUES (2, '0.207', '2021-04-25', 2);
-INSERT INTO `eigen` VALUES (3, '0.185', '2021-04-25', 3);
-INSERT INTO `eigen` VALUES (4, '0.128', '2021-04-25', 4);
-INSERT INTO `eigen` VALUES (5, '0.148', '2021-04-25', 5);
-INSERT INTO `eigen` VALUES (6, '0.131', '2021-04-25', 6);
+INSERT INTO `eigen_kriteria` VALUES (1, '0.202', '2021-04-25', 1);
+INSERT INTO `eigen_kriteria` VALUES (2, '0.207', '2021-04-25', 2);
+INSERT INTO `eigen_kriteria` VALUES (3, '0.185', '2021-04-25', 3);
+INSERT INTO `eigen_kriteria` VALUES (4, '0.128', '2021-04-25', 4);
+INSERT INTO `eigen_kriteria` VALUES (5, '0.148', '2021-04-25', 5);
+INSERT INTO `eigen_kriteria` VALUES (6, '0.131', '2021-04-25', 6);
 
 -- ----------------------------
 -- Table structure for kategori_alternatif
@@ -260,7 +264,7 @@ CREATE TABLE `kategori_alternatif`  (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
   `kategori_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of kategori_alternatif
@@ -277,7 +281,7 @@ CREATE TABLE `kriteria`  (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
   `kriteria_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of kriteria
@@ -300,7 +304,7 @@ CREATE TABLE `random_index`  (
   PRIMARY KEY (`seq`) USING BTREE,
   UNIQUE INDEX `Ukuran_Matriks`(`size_matrics`) USING BTREE,
   UNIQUE INDEX `Ukuran_Matriks_2`(`size_matrics`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of random_index
@@ -330,7 +334,7 @@ CREATE TABLE `user`  (
   `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of user
