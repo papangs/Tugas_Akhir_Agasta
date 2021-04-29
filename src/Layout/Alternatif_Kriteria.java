@@ -64,9 +64,6 @@ public class Alternatif_Kriteria extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Alternatif Kriteria");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "List Alternatif"));

@@ -49,9 +49,6 @@ public class Perangkingan extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Perangkingan");
         setToolTipText("");
 

@@ -42,8 +42,6 @@ public class Change_Password extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
 
         setClosable(true);
-        setIconifiable(true);
-        setResizable(true);
         setTitle("Change Password");
 
         jLabel2.setFont(new java.awt.Font("Georgia", 1, 15)); // NOI18N

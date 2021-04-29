@@ -60,9 +60,6 @@ public class Alternatif extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Data Alternatif");
 
         jPanel1.setOpaque(false);

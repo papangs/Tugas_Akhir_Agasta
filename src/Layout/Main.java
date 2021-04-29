@@ -655,8 +655,7 @@ public class Main extends javax.swing.JFrame {
                 jDesktopPanetransparan1.add(m);
                 m.show();
                 m.setSelected(true);
-                controlm.getDataKriteria();
-                controlm.Matrix(m);
+                controlm.getData(m);
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -664,8 +663,7 @@ public class Main extends javax.swing.JFrame {
             try {
                 m.show();
                 m.setSelected(true);
-                controlm.getDataKriteria();
-                controlm.Matrix(m);
+                controlm.getData(m);
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }

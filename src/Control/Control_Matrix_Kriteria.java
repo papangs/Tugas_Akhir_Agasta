@@ -44,6 +44,13 @@ public class Control_Matrix_Kriteria {
         buatKolomSesuai(view.jTable1);
     }
 
+    public void getData(Matrix_Kriteria view){
+        view.jTabbedPane1.setEnabledAt(1, false);
+        view.jScrollPane2.setVisible(false);
+        getDataKriteria();
+        Matrix(view);
+    }
+    
     public void buatKolomSesuai(JTable t) {
         TableColumnModel modelKolom = t.getColumnModel();
 
