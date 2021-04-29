@@ -81,7 +81,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 model.addRow(new Object[2]);
                 model.setValueAt((n + 1), n, 0);
                 model.setValueAt(r.getString("alternatif.alternatif_name"), n, 1);
-                model.setValueAt(false+"a", n, 2);
+                model.setValueAt(false, n, 2);
                 n = n + 1;
             }
             jTable1.setModel(model);

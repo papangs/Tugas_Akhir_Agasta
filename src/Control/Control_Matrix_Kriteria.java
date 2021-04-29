@@ -469,8 +469,6 @@ public class Control_Matrix_Kriteria {
                 saveProccess(view);
             } else {
                 JOptionPane.showMessageDialog(view, "CR value not consistent!", "Wrong", JOptionPane.ERROR_MESSAGE);
-//                view.jButton5.doClick();
-//                view.jButton3.doClick();
             }
         }
     }
@@ -483,7 +481,7 @@ public class Control_Matrix_Kriteria {
             int t1551 = 0;
             int row551 = view.jTable3.getRowCount();
 
-            String sqlq = "TRUNCATE TABLE eigen";
+            String sqlq = "TRUNCATE TABLE eigen_kriteria";
 
             PreparedStatement p22 = c.prepareStatement(sqlq);
             p22.executeUpdate();
@@ -498,7 +496,7 @@ public class Control_Matrix_Kriteria {
                     eigen551 = Double.parseDouble(view.jTable3.getValueAt(xx551, t1551 + 1).toString());
                 }
 
-                String sql = "insert into eigen set \n"
+                String sql = "insert into eigen_kriteria set \n"
                         + "eigen_value ='" + eigen551 + "',\n"
                         + "date = CURDATE(),"
                         + "kriteria_seq ='" + id + "'";
