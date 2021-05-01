@@ -10,6 +10,7 @@ import Control.Control_Kriteria;
 import Control.Control_Main;
 import Control.Control_Password;
 import Control.Control_Alternatif_Kriteria;
+import Control.Control_Matrix_Alternatif;
 import Control.Control_Matrix_Kriteria;
 import Control.Control_Perangkingan;
 import java.awt.event.ActionEvent;
@@ -39,6 +40,7 @@ public class Main extends javax.swing.JFrame {
     Control_Main controlmain;
     Control_Matrix_Kriteria controlm;
     Control_Perangkingan controlp;
+    Control_Matrix_Alternatif controlal;
     
     Kriteria a;
     Alternatif_Kriteria b;
@@ -46,6 +48,7 @@ public class Main extends javax.swing.JFrame {
     Change_Password f;
     Matrix_Kriteria m;
     Perangkingan p;
+    Matrix_Alternatif al;
     
     public Main() {
         initComponents();
@@ -60,6 +63,7 @@ public class Main extends javax.swing.JFrame {
         f = new Change_Password();
         m = new Matrix_Kriteria();
         p = new Perangkingan();
+        al = new Matrix_Alternatif();
         
         control = new Control_Kriteria();
         controla = new Control_Alternatif();
@@ -67,6 +71,7 @@ public class Main extends javax.swing.JFrame {
         controlsim = new Control_Alternatif_Kriteria();
         controlm = new Control_Matrix_Kriteria();
         controlp = new Control_Perangkingan();
+        controlal = new Control_Matrix_Alternatif();
         
         buttonImageReflection2.setVisible(false);
     }
@@ -695,6 +700,24 @@ public class Main extends javax.swing.JFrame {
 
     private void buttonImageReflection6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection6ActionPerformed
         // TODO add your handling code here:
+        if (!al.isVisible()) {
+            try {
+                jDesktopPanetransparan1.add(al);
+                al.show();
+                al.setSelected(true);
+                controlal.getData(al);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                al.show();
+                al.setSelected(true);
+                controlal.getData(al);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_buttonImageReflection6ActionPerformed
 
     /**
