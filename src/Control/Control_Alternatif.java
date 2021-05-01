@@ -6,9 +6,7 @@
 package Control;
 
 import Connect.DBConnect;
-import Layout.Change_Password;
 import Layout.Alternatif;
-import Layout.Kriteria;
 import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

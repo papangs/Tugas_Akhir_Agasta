@@ -128,6 +128,9 @@ public class Alternatif extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable2MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTable2MouseEntered(evt);
+            }
         });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -480,6 +483,10 @@ public class Alternatif extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         jComboBox1MouseClicked(null);
     }//GEN-LAST:event_jComboBox1KeyReleased
+
+    private void jTable2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2MouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
