@@ -59,6 +59,7 @@ public class Control_Matrix_Kriteria {
         Matrix(view);
         getPerbandinganKriteria(view);
         view.jButton3.setVisible(false);
+        view.jButton6.setVisible(false);
     }
 
     public void buatKolomSesuai(JTable t) {
