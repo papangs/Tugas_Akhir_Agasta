@@ -3,15 +3,15 @@
 
  Source Server         : Localhost
  Source Server Type    : MySQL
- Source Server Version : 50625
+ Source Server Version : 100418
  Source Host           : localhost:3306
  Source Schema         : tugas_akhir_agasta
 
  Target Server Type    : MySQL
- Target Server Version : 50625
+ Target Server Version : 100418
  File Encoding         : 65001
 
- Date: 29/04/2021 16:17:26
+ Date: 02/05/2021 17:44:54
 */
 
 SET NAMES utf8mb4;
@@ -22,9 +22,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `alternatif`;
 CREATE TABLE `alternatif`  (
-  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `seq` int NOT NULL AUTO_INCREMENT,
   `alternatif_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `kategori_seq` int(255) NULL DEFAULT NULL,
+  `kategori_seq` int NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkategoriseq`(`kategori_seq`) USING BTREE,
   CONSTRAINT `fkkategoriseq` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -62,16 +62,16 @@ INSERT INTO `alternatif` VALUES (23, 'AMD RX VEGA 64', 3);
 -- ----------------------------
 DROP TABLE IF EXISTS `alternatif_kriteria`;
 CREATE TABLE `alternatif_kriteria`  (
-  `seq` int(255) NOT NULL AUTO_INCREMENT,
-  `kriteria_seq` int(255) NULL DEFAULT NULL,
-  `alternatif_seq` int(255) NULL DEFAULT NULL,
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `kriteria_seq` int NULL DEFAULT NULL,
+  `alternatif_seq` int NULL DEFAULT NULL,
   `content_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
-  INDEX `alternatif_seq`(`alternatif_seq`) USING BTREE,
-  INDEX `kriteria_seq`(`kriteria_seq`) USING BTREE,
-  CONSTRAINT `alternatif_seq` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `kriteria_seq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+  INDEX `fkkriteria`(`kriteria_seq`) USING BTREE,
+  INDEX `fkalternatif`(`alternatif_seq`) USING BTREE,
+  CONSTRAINT `fkkriteria` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fkalternatif` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of alternatif_kriteria
@@ -216,31 +216,176 @@ INSERT INTO `alternatif_kriteria` VALUES (137, 5, 23, '240W');
 INSERT INTO `alternatif_kriteria` VALUES (138, 6, 23, 'Rp5,200,000');
 
 -- ----------------------------
--- Table structure for bobot_alternatif_kriteria
+-- Table structure for eigen_alternatif
 -- ----------------------------
-DROP TABLE IF EXISTS `bobot_alternatif_kriteria`;
-CREATE TABLE `bobot_alternatif_kriteria`  (
-  `seq` int(255) NOT NULL AUTO_INCREMENT,
-  `akternatif_kriteria_seq` int(255) NULL DEFAULT NULL,
-  `nilai` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+DROP TABLE IF EXISTS `eigen_alternatif`;
+CREATE TABLE `eigen_alternatif`  (
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `eigen_value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `date` date NULL DEFAULT NULL,
+  `alternatif_seq` int NULL DEFAULT NULL,
+  `kategori_seq` int NULL DEFAULT NULL,
+  `kriteria_seq` int NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
-  INDEX `akternatif_kriteria_seq`(`akternatif_kriteria_seq`) USING BTREE,
-  CONSTRAINT `akternatif_kriteria_seq` FOREIGN KEY (`akternatif_kriteria_seq`) REFERENCES `alternatif_kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+  INDEX `fkkriteria_seq`(`alternatif_seq`) USING BTREE,
+  INDEX `fkkategoriseq1`(`kategori_seq`) USING BTREE,
+  INDEX `fkkriteriaseq`(`kriteria_seq`) USING BTREE,
+  CONSTRAINT `fkalternatifseq` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fkkategoriseq1` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fkkriteriaseq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 387 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
--- Records of bobot_alternatif_kriteria
+-- Records of eigen_alternatif
 -- ----------------------------
+INSERT INTO `eigen_alternatif` VALUES (226, '0.107', '2021-05-02', 2, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (227, '0.136', '2021-05-02', 4, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (228, '0.136', '2021-05-02', 5, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (229, '0.124', '2021-05-02', 6, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (230, '0.124', '2021-05-02', 8, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (231, '0.124', '2021-05-02', 9, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (232, '0.124', '2021-05-02', 10, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (233, '0.124', '2021-05-02', 13, 1, 1);
+INSERT INTO `eigen_alternatif` VALUES (234, '0.125', '2021-05-02', 12, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (235, '0.125', '2021-05-02', 14, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (236, '0.125', '2021-05-02', 15, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (237, '0.125', '2021-05-02', 16, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (238, '0.125', '2021-05-02', 17, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (239, '0.125', '2021-05-02', 18, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (240, '0.125', '2021-05-02', 19, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (241, '0.125', '2021-05-02', 20, 2, 1);
+INSERT INTO `eigen_alternatif` VALUES (242, '0.143', '2021-05-02', 1, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (243, '0.143', '2021-05-02', 3, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (244, '0.143', '2021-05-02', 7, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (245, '0.143', '2021-05-02', 11, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (246, '0.143', '2021-05-02', 21, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (247, '0.143', '2021-05-02', 22, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (248, '0.143', '2021-05-02', 23, 3, 1);
+INSERT INTO `eigen_alternatif` VALUES (249, '0.155', '2021-05-02', 2, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (250, '0.127', '2021-05-02', 4, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (251, '0.138', '2021-05-02', 5, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (252, '0.114', '2021-05-02', 6, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (253, '0.113', '2021-05-02', 8, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (254, '0.121', '2021-05-02', 9, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (255, '0.113', '2021-05-02', 10, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (256, '0.121', '2021-05-02', 13, 1, 2);
+INSERT INTO `eigen_alternatif` VALUES (257, '0.125', '2021-05-02', 12, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (258, '0.125', '2021-05-02', 14, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (259, '0.125', '2021-05-02', 15, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (260, '0.125', '2021-05-02', 16, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (261, '0.125', '2021-05-02', 17, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (262, '0.125', '2021-05-02', 18, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (263, '0.125', '2021-05-02', 19, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (264, '0.125', '2021-05-02', 20, 2, 2);
+INSERT INTO `eigen_alternatif` VALUES (265, '0.143', '2021-05-02', 1, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (266, '0.143', '2021-05-02', 3, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (267, '0.143', '2021-05-02', 7, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (268, '0.143', '2021-05-02', 11, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (269, '0.143', '2021-05-02', 21, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (270, '0.143', '2021-05-02', 22, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (271, '0.143', '2021-05-02', 23, 3, 2);
+INSERT INTO `eigen_alternatif` VALUES (295, '0.107', '2021-05-02', 2, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (296, '0.136', '2021-05-02', 4, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (297, '0.136', '2021-05-02', 5, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (298, '0.124', '2021-05-02', 6, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (299, '0.124', '2021-05-02', 8, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (300, '0.124', '2021-05-02', 9, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (301, '0.124', '2021-05-02', 10, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (302, '0.124', '2021-05-02', 13, 1, 3);
+INSERT INTO `eigen_alternatif` VALUES (303, '0.125', '2021-05-02', 12, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (304, '0.125', '2021-05-02', 14, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (305, '0.125', '2021-05-02', 15, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (306, '0.125', '2021-05-02', 16, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (307, '0.125', '2021-05-02', 17, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (308, '0.125', '2021-05-02', 18, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (309, '0.125', '2021-05-02', 19, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (310, '0.125', '2021-05-02', 20, 2, 3);
+INSERT INTO `eigen_alternatif` VALUES (311, '0.143', '2021-05-02', 1, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (312, '0.143', '2021-05-02', 3, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (313, '0.143', '2021-05-02', 7, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (314, '0.143', '2021-05-02', 11, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (315, '0.143', '2021-05-02', 21, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (316, '0.143', '2021-05-02', 22, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (317, '0.143', '2021-05-02', 23, 3, 3);
+INSERT INTO `eigen_alternatif` VALUES (318, '0.151', '2021-05-02', 2, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (319, '0.115', '2021-05-02', 4, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (320, '0.115', '2021-05-02', 5, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (321, '0.124', '2021-05-02', 6, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (322, '0.124', '2021-05-02', 8, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (323, '0.124', '2021-05-02', 9, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (324, '0.124', '2021-05-02', 10, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (325, '0.124', '2021-05-02', 13, 1, 4);
+INSERT INTO `eigen_alternatif` VALUES (326, '0.125', '2021-05-02', 12, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (327, '0.125', '2021-05-02', 14, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (328, '0.125', '2021-05-02', 15, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (329, '0.125', '2021-05-02', 16, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (330, '0.125', '2021-05-02', 17, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (331, '0.125', '2021-05-02', 18, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (332, '0.125', '2021-05-02', 19, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (333, '0.125', '2021-05-02', 20, 2, 4);
+INSERT INTO `eigen_alternatif` VALUES (334, '0.143', '2021-05-02', 1, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (335, '0.143', '2021-05-02', 3, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (336, '0.143', '2021-05-02', 7, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (337, '0.143', '2021-05-02', 11, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (338, '0.143', '2021-05-02', 21, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (339, '0.143', '2021-05-02', 22, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (340, '0.143', '2021-05-02', 23, 3, 4);
+INSERT INTO `eigen_alternatif` VALUES (341, '0.107', '2021-05-02', 2, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (342, '0.136', '2021-05-02', 4, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (343, '0.136', '2021-05-02', 5, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (344, '0.124', '2021-05-02', 6, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (345, '0.124', '2021-05-02', 8, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (346, '0.124', '2021-05-02', 9, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (347, '0.124', '2021-05-02', 10, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (348, '0.124', '2021-05-02', 13, 1, 5);
+INSERT INTO `eigen_alternatif` VALUES (349, '0.125', '2021-05-02', 12, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (350, '0.125', '2021-05-02', 14, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (351, '0.125', '2021-05-02', 15, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (352, '0.125', '2021-05-02', 16, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (353, '0.125', '2021-05-02', 17, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (354, '0.125', '2021-05-02', 18, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (355, '0.125', '2021-05-02', 19, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (356, '0.125', '2021-05-02', 20, 2, 5);
+INSERT INTO `eigen_alternatif` VALUES (357, '0.143', '2021-05-02', 1, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (358, '0.143', '2021-05-02', 3, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (359, '0.143', '2021-05-02', 7, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (360, '0.143', '2021-05-02', 11, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (361, '0.143', '2021-05-02', 21, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (362, '0.143', '2021-05-02', 22, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (363, '0.143', '2021-05-02', 23, 3, 5);
+INSERT INTO `eigen_alternatif` VALUES (364, '0.151', '2021-05-02', 2, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (365, '0.115', '2021-05-02', 4, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (366, '0.115', '2021-05-02', 5, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (367, '0.124', '2021-05-02', 6, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (368, '0.124', '2021-05-02', 8, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (369, '0.124', '2021-05-02', 9, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (370, '0.124', '2021-05-02', 10, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (371, '0.124', '2021-05-02', 13, 1, 6);
+INSERT INTO `eigen_alternatif` VALUES (372, '0.125', '2021-05-02', 12, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (373, '0.125', '2021-05-02', 14, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (374, '0.125', '2021-05-02', 15, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (375, '0.125', '2021-05-02', 16, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (376, '0.125', '2021-05-02', 17, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (377, '0.125', '2021-05-02', 18, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (378, '0.125', '2021-05-02', 19, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (379, '0.125', '2021-05-02', 20, 2, 6);
+INSERT INTO `eigen_alternatif` VALUES (380, '0.143', '2021-05-02', 1, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (381, '0.143', '2021-05-02', 3, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (382, '0.143', '2021-05-02', 7, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (383, '0.143', '2021-05-02', 11, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (384, '0.143', '2021-05-02', 21, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (385, '0.143', '2021-05-02', 22, 3, 6);
+INSERT INTO `eigen_alternatif` VALUES (386, '0.143', '2021-05-02', 23, 3, 6);
 
 -- ----------------------------
 -- Table structure for eigen_kriteria
 -- ----------------------------
 DROP TABLE IF EXISTS `eigen_kriteria`;
 CREATE TABLE `eigen_kriteria`  (
-  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `seq` int NOT NULL AUTO_INCREMENT,
   `eigen_value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `kriteria_seq` int(11) NULL DEFAULT NULL,
+  `kriteria_seq` int NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkriteria_seq`(`kriteria_seq`) USING BTREE,
   CONSTRAINT `fkkriteria_seq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -249,19 +394,19 @@ CREATE TABLE `eigen_kriteria`  (
 -- ----------------------------
 -- Records of eigen_kriteria
 -- ----------------------------
-INSERT INTO `eigen_kriteria` VALUES (1, '0.202', '2021-04-25', 1);
-INSERT INTO `eigen_kriteria` VALUES (2, '0.207', '2021-04-25', 2);
-INSERT INTO `eigen_kriteria` VALUES (3, '0.185', '2021-04-25', 3);
-INSERT INTO `eigen_kriteria` VALUES (4, '0.128', '2021-04-25', 4);
-INSERT INTO `eigen_kriteria` VALUES (5, '0.148', '2021-04-25', 5);
-INSERT INTO `eigen_kriteria` VALUES (6, '0.131', '2021-04-25', 6);
+INSERT INTO `eigen_kriteria` VALUES (1, '0.206', '2021-05-02', 1);
+INSERT INTO `eigen_kriteria` VALUES (2, '0.138', '2021-05-02', 2);
+INSERT INTO `eigen_kriteria` VALUES (3, '0.225', '2021-05-02', 3);
+INSERT INTO `eigen_kriteria` VALUES (4, '0.109', '2021-05-02', 4);
+INSERT INTO `eigen_kriteria` VALUES (5, '0.196', '2021-05-02', 5);
+INSERT INTO `eigen_kriteria` VALUES (6, '0.126', '2021-05-02', 6);
 
 -- ----------------------------
 -- Table structure for kategori_alternatif
 -- ----------------------------
 DROP TABLE IF EXISTS `kategori_alternatif`;
 CREATE TABLE `kategori_alternatif`  (
-  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `seq` int NOT NULL AUTO_INCREMENT,
   `kategori_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
@@ -278,10 +423,10 @@ INSERT INTO `kategori_alternatif` VALUES (3, 'Low End');
 -- ----------------------------
 DROP TABLE IF EXISTS `kriteria`;
 CREATE TABLE `kriteria`  (
-  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `seq` int NOT NULL AUTO_INCREMENT,
   `kriteria_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of kriteria
@@ -294,12 +439,525 @@ INSERT INTO `kriteria` VALUES (5, 'TDP');
 INSERT INTO `kriteria` VALUES (6, 'Harga');
 
 -- ----------------------------
+-- Table structure for perbandingan_alternatif
+-- ----------------------------
+DROP TABLE IF EXISTS `perbandingan_alternatif`;
+CREATE TABLE `perbandingan_alternatif`  (
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `alternatif1_seq` int NULL DEFAULT NULL,
+  `alternatif2_seq` int NULL DEFAULT NULL,
+  `kategori_seq` int NULL DEFAULT NULL,
+  `pilihan_alternatif_seq` int NULL DEFAULT NULL,
+  `kriteria_seq` int NULL DEFAULT NULL,
+  `nilai` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`seq`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2104 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of perbandingan_alternatif
+-- ----------------------------
+INSERT INTO `perbandingan_alternatif` VALUES (1565, 2, 4, 1, 4, 1, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1566, 2, 5, 1, 5, 1, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1567, 2, 6, 1, 2, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1568, 2, 8, 1, 2, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1569, 2, 9, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1570, 2, 10, 1, 10, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1571, 2, 13, 1, 2, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1572, 4, 5, 1, 5, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1573, 4, 6, 1, 6, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1574, 4, 8, 1, 8, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1575, 4, 9, 1, 4, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1576, 4, 10, 1, 4, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1577, 4, 13, 1, 13, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1578, 5, 6, 1, 6, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1579, 5, 8, 1, 5, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1580, 5, 9, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1581, 5, 10, 1, 5, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1582, 5, 13, 1, 5, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1583, 6, 8, 1, 8, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1584, 6, 9, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1585, 6, 10, 1, 6, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1586, 6, 13, 1, 6, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1587, 8, 9, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1588, 8, 10, 1, 10, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1589, 8, 13, 1, 13, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1590, 9, 10, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1591, 9, 13, 1, 9, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1592, 10, 13, 1, 13, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1593, 12, 14, 2, 12, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1594, 12, 15, 2, 12, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1595, 12, 16, 2, 16, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1596, 12, 17, 2, 17, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1597, 12, 18, 2, 18, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1598, 12, 19, 2, 19, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1599, 12, 20, 2, 12, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1600, 14, 15, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1601, 14, 16, 2, 14, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1602, 14, 17, 2, 14, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1603, 14, 18, 2, 14, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1604, 14, 19, 2, 19, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1605, 14, 20, 2, 20, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1606, 15, 16, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1607, 15, 17, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1608, 15, 18, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1609, 15, 19, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1610, 15, 20, 2, 15, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1611, 16, 17, 2, 16, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1612, 16, 18, 2, 16, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1613, 16, 19, 2, 19, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1614, 16, 20, 2, 20, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1615, 17, 18, 2, 17, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1616, 17, 19, 2, 17, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1617, 17, 20, 2, 20, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1618, 18, 19, 2, 18, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1619, 18, 20, 2, 20, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1620, 19, 20, 2, 20, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1621, 1, 3, 3, 3, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1622, 1, 7, 3, 7, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1623, 1, 11, 3, 1, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1624, 1, 21, 3, 1, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1625, 1, 22, 3, 1, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1626, 1, 23, 3, 23, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1627, 3, 7, 3, 7, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1628, 3, 11, 3, 3, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1629, 3, 21, 3, 3, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1630, 3, 22, 3, 3, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1631, 3, 23, 3, 3, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1632, 7, 11, 3, 11, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1633, 7, 21, 3, 21, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1634, 7, 22, 3, 22, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1635, 7, 23, 3, 23, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1636, 11, 21, 3, 11, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1637, 11, 22, 3, 22, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1638, 11, 23, 3, 23, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1639, 21, 22, 3, 21, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1640, 21, 23, 3, 23, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1641, 22, 23, 3, 23, 1, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1642, 2, 4, 1, 2, 2, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1643, 2, 5, 1, 5, 2, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1644, 2, 6, 1, 6, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1645, 2, 8, 1, 2, 2, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1646, 2, 9, 1, 2, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1647, 2, 10, 1, 2, 2, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1648, 2, 13, 1, 13, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1649, 4, 5, 1, 4, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1650, 4, 6, 1, 4, 2, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1651, 4, 8, 1, 4, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1652, 4, 9, 1, 9, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1653, 4, 10, 1, 4, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1654, 4, 13, 1, 4, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1655, 5, 6, 1, 5, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1656, 5, 8, 1, 8, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1657, 5, 9, 1, 5, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1658, 5, 10, 1, 10, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1659, 5, 13, 1, 5, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1660, 6, 8, 1, 6, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1661, 6, 9, 1, 9, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1662, 6, 10, 1, 10, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1663, 6, 13, 1, 6, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1664, 8, 9, 1, 8, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1665, 8, 10, 1, 10, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1666, 8, 13, 1, 8, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1667, 9, 10, 1, 10, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1668, 9, 13, 1, 13, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1669, 10, 13, 1, 10, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1670, 12, 14, 2, 12, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1671, 12, 15, 2, 15, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1672, 12, 16, 2, 16, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1673, 12, 17, 2, 17, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1674, 12, 18, 2, 12, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1675, 12, 19, 2, 19, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1676, 12, 20, 2, 12, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1677, 14, 15, 2, 15, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1678, 14, 16, 2, 16, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1679, 14, 17, 2, 17, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1680, 14, 18, 2, 14, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1681, 14, 19, 2, 19, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1682, 14, 20, 2, 20, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1683, 15, 16, 2, 16, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1684, 15, 17, 2, 17, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1685, 15, 18, 2, 18, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1686, 15, 19, 2, 15, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1687, 15, 20, 2, 15, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1688, 16, 17, 2, 17, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1689, 16, 18, 2, 18, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1690, 16, 19, 2, 16, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1691, 16, 20, 2, 20, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1692, 17, 18, 2, 18, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1693, 17, 19, 2, 19, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1694, 17, 20, 2, 17, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1695, 18, 19, 2, 18, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1696, 18, 20, 2, 20, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1697, 19, 20, 2, 19, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1698, 1, 3, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1699, 1, 7, 3, 7, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1700, 1, 11, 3, 11, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1701, 1, 21, 3, 21, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1702, 1, 22, 3, 22, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1703, 1, 23, 3, 1, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1704, 3, 7, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1705, 3, 11, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1706, 3, 21, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1707, 3, 22, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1708, 3, 23, 3, 3, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1709, 7, 11, 3, 7, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1710, 7, 21, 3, 7, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1711, 7, 22, 3, 7, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1712, 7, 23, 3, 23, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1713, 11, 21, 3, 21, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1714, 11, 22, 3, 11, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1715, 11, 23, 3, 11, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1716, 21, 22, 3, 21, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1717, 21, 23, 3, 23, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1718, 22, 23, 3, 22, 2, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1796, 2, 4, 1, 4, 3, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1797, 2, 5, 1, 5, 3, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1798, 2, 6, 1, 2, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1799, 2, 8, 1, 2, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1800, 2, 9, 1, 2, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1801, 2, 10, 1, 10, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1802, 2, 13, 1, 13, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1803, 4, 5, 1, 5, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1804, 4, 6, 1, 6, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1805, 4, 8, 1, 4, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1806, 4, 9, 1, 4, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1807, 4, 10, 1, 4, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1808, 4, 13, 1, 13, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1809, 5, 6, 1, 5, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1810, 5, 8, 1, 5, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1811, 5, 9, 1, 9, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1812, 5, 10, 1, 5, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1813, 5, 13, 1, 5, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1814, 6, 8, 1, 8, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1815, 6, 9, 1, 9, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1816, 6, 10, 1, 6, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1817, 6, 13, 1, 13, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1818, 8, 9, 1, 8, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1819, 8, 10, 1, 10, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1820, 8, 13, 1, 8, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1821, 9, 10, 1, 9, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1822, 9, 13, 1, 13, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1823, 10, 13, 1, 13, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1824, 12, 14, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1825, 12, 15, 2, 15, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1826, 12, 16, 2, 16, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1827, 12, 17, 2, 17, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1828, 12, 18, 2, 18, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1829, 12, 19, 2, 12, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1830, 12, 20, 2, 12, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1831, 14, 15, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1832, 14, 16, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1833, 14, 17, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1834, 14, 18, 2, 18, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1835, 14, 19, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1836, 14, 20, 2, 14, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1837, 15, 16, 2, 16, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1838, 15, 17, 2, 15, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1839, 15, 18, 2, 15, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1840, 15, 19, 2, 19, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1841, 15, 20, 2, 15, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1842, 16, 17, 2, 17, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1843, 16, 18, 2, 16, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1844, 16, 19, 2, 16, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1845, 16, 20, 2, 20, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1846, 17, 18, 2, 18, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1847, 17, 19, 2, 17, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1848, 17, 20, 2, 17, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1849, 18, 19, 2, 18, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1850, 18, 20, 2, 20, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1851, 19, 20, 2, 20, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1852, 1, 3, 3, 1, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1853, 1, 7, 3, 1, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1854, 1, 11, 3, 11, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1855, 1, 21, 3, 1, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1856, 1, 22, 3, 1, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1857, 1, 23, 3, 23, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1858, 3, 7, 3, 3, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1859, 3, 11, 3, 3, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1860, 3, 21, 3, 3, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1861, 3, 22, 3, 3, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1862, 3, 23, 3, 3, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1863, 7, 11, 3, 7, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1864, 7, 21, 3, 21, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1865, 7, 22, 3, 22, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1866, 7, 23, 3, 23, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1867, 11, 21, 3, 11, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1868, 11, 22, 3, 11, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1869, 11, 23, 3, 23, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1870, 21, 22, 3, 22, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1871, 21, 23, 3, 21, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1872, 22, 23, 3, 22, 3, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1873, 2, 4, 1, 2, 4, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1874, 2, 5, 1, 2, 4, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1875, 2, 6, 1, 6, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1876, 2, 8, 1, 2, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1877, 2, 9, 1, 9, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1878, 2, 10, 1, 2, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1879, 2, 13, 1, 2, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1880, 4, 5, 1, 4, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1881, 4, 6, 1, 4, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1882, 4, 8, 1, 4, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1883, 4, 9, 1, 4, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1884, 4, 10, 1, 10, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1885, 4, 13, 1, 13, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1886, 5, 6, 1, 6, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1887, 5, 8, 1, 8, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1888, 5, 9, 1, 9, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1889, 5, 10, 1, 5, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1890, 5, 13, 1, 5, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1891, 6, 8, 1, 8, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1892, 6, 9, 1, 6, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1893, 6, 10, 1, 10, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1894, 6, 13, 1, 6, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1895, 8, 9, 1, 9, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1896, 8, 10, 1, 8, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1897, 8, 13, 1, 13, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1898, 9, 10, 1, 9, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1899, 9, 13, 1, 9, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1900, 10, 13, 1, 10, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1901, 12, 14, 2, 14, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1902, 12, 15, 2, 12, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1903, 12, 16, 2, 12, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1904, 12, 17, 2, 17, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1905, 12, 18, 2, 12, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1906, 12, 19, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1907, 12, 20, 2, 20, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1908, 14, 15, 2, 14, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1909, 14, 16, 2, 14, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1910, 14, 17, 2, 17, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1911, 14, 18, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1912, 14, 19, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1913, 14, 20, 2, 14, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1914, 15, 16, 2, 15, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1915, 15, 17, 2, 15, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1916, 15, 18, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1917, 15, 19, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1918, 15, 20, 2, 20, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1919, 16, 17, 2, 16, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1920, 16, 18, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1921, 16, 19, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1922, 16, 20, 2, 20, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1923, 17, 18, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1924, 17, 19, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1925, 17, 20, 2, 17, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1926, 18, 19, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1927, 18, 20, 2, 18, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1928, 19, 20, 2, 19, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1929, 1, 3, 3, 1, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1930, 1, 7, 3, 7, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1931, 1, 11, 3, 11, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1932, 1, 21, 3, 1, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1933, 1, 22, 3, 22, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1934, 1, 23, 3, 1, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1935, 3, 7, 3, 7, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1936, 3, 11, 3, 11, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1937, 3, 21, 3, 21, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1938, 3, 22, 3, 22, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1939, 3, 23, 3, 23, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1940, 7, 11, 3, 11, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1941, 7, 21, 3, 21, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1942, 7, 22, 3, 22, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1943, 7, 23, 3, 23, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1944, 11, 21, 3, 21, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1945, 11, 22, 3, 11, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1946, 11, 23, 3, 23, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1947, 21, 22, 3, 22, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1948, 21, 23, 3, 23, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1949, 22, 23, 3, 23, 4, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1950, 2, 4, 1, 4, 5, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1951, 2, 5, 1, 5, 5, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (1952, 2, 6, 1, 6, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1953, 2, 8, 1, 2, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1954, 2, 9, 1, 2, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1955, 2, 10, 1, 2, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1956, 2, 13, 1, 2, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1957, 4, 5, 1, 5, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1958, 4, 6, 1, 4, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1959, 4, 8, 1, 4, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1960, 4, 9, 1, 9, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1961, 4, 10, 1, 4, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1962, 4, 13, 1, 13, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1963, 5, 6, 1, 6, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1964, 5, 8, 1, 5, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1965, 5, 9, 1, 9, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1966, 5, 10, 1, 5, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1967, 5, 13, 1, 5, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1968, 6, 8, 1, 6, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1969, 6, 9, 1, 9, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1970, 6, 10, 1, 6, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1971, 6, 13, 1, 13, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1972, 8, 9, 1, 8, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1973, 8, 10, 1, 8, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1974, 8, 13, 1, 8, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1975, 9, 10, 1, 10, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1976, 9, 13, 1, 13, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1977, 10, 13, 1, 13, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1978, 12, 14, 2, 12, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1979, 12, 15, 2, 12, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1980, 12, 16, 2, 16, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1981, 12, 17, 2, 12, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1982, 12, 18, 2, 18, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1983, 12, 19, 2, 19, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1984, 12, 20, 2, 20, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1985, 14, 15, 2, 14, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1986, 14, 16, 2, 14, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1987, 14, 17, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1988, 14, 18, 2, 18, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1989, 14, 19, 2, 14, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1990, 14, 20, 2, 14, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1991, 15, 16, 2, 15, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1992, 15, 17, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1993, 15, 18, 2, 15, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1994, 15, 19, 2, 15, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1995, 15, 20, 2, 15, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1996, 16, 17, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1997, 16, 18, 2, 18, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1998, 16, 19, 2, 16, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (1999, 16, 20, 2, 16, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2000, 17, 18, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2001, 17, 19, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2002, 17, 20, 2, 17, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2003, 18, 19, 2, 19, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2004, 18, 20, 2, 18, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2005, 19, 20, 2, 19, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2006, 1, 3, 3, 1, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2007, 1, 7, 3, 7, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2008, 1, 11, 3, 1, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2009, 1, 21, 3, 21, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2010, 1, 22, 3, 22, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2011, 1, 23, 3, 1, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2012, 3, 7, 3, 3, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2013, 3, 11, 3, 11, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2014, 3, 21, 3, 21, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2015, 3, 22, 3, 22, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2016, 3, 23, 3, 3, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2017, 7, 11, 3, 11, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2018, 7, 21, 3, 7, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2019, 7, 22, 3, 22, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2020, 7, 23, 3, 7, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2021, 11, 21, 3, 21, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2022, 11, 22, 3, 11, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2023, 11, 23, 3, 23, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2024, 21, 22, 3, 21, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2025, 21, 23, 3, 23, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2026, 22, 23, 3, 23, 5, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2027, 2, 4, 1, 2, 6, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (2028, 2, 5, 1, 2, 6, '2');
+INSERT INTO `perbandingan_alternatif` VALUES (2029, 2, 6, 1, 2, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2030, 2, 8, 1, 2, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2031, 2, 9, 1, 2, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2032, 2, 10, 1, 2, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2033, 2, 13, 1, 2, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2034, 4, 5, 1, 5, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2035, 4, 6, 1, 6, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2036, 4, 8, 1, 8, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2037, 4, 9, 1, 4, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2038, 4, 10, 1, 10, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2039, 4, 13, 1, 4, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2040, 5, 6, 1, 5, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2041, 5, 8, 1, 5, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2042, 5, 9, 1, 9, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2043, 5, 10, 1, 5, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2044, 5, 13, 1, 5, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2045, 6, 8, 1, 6, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2046, 6, 9, 1, 9, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2047, 6, 10, 1, 10, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2048, 6, 13, 1, 6, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2049, 8, 9, 1, 9, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2050, 8, 10, 1, 8, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2051, 8, 13, 1, 8, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2052, 9, 10, 1, 9, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2053, 9, 13, 1, 13, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2054, 10, 13, 1, 10, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2055, 12, 14, 2, 12, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2056, 12, 15, 2, 15, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2057, 12, 16, 2, 16, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2058, 12, 17, 2, 12, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2059, 12, 18, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2060, 12, 19, 2, 19, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2061, 12, 20, 2, 12, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2062, 14, 15, 2, 15, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2063, 14, 16, 2, 16, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2064, 14, 17, 2, 17, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2065, 14, 18, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2066, 14, 19, 2, 14, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2067, 14, 20, 2, 20, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2068, 15, 16, 2, 15, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2069, 15, 17, 2, 17, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2070, 15, 18, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2071, 15, 19, 2, 15, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2072, 15, 20, 2, 20, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2073, 16, 17, 2, 17, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2074, 16, 18, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2075, 16, 19, 2, 19, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2076, 16, 20, 2, 20, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2077, 17, 18, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2078, 17, 19, 2, 17, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2079, 17, 20, 2, 17, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2080, 18, 19, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2081, 18, 20, 2, 18, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2082, 19, 20, 2, 19, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2083, 1, 3, 3, 1, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2084, 1, 7, 3, 1, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2085, 1, 11, 3, 11, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2086, 1, 21, 3, 1, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2087, 1, 22, 3, 1, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2088, 1, 23, 3, 23, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2089, 3, 7, 3, 3, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2090, 3, 11, 3, 11, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2091, 3, 21, 3, 3, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2092, 3, 22, 3, 22, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2093, 3, 23, 3, 3, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2094, 7, 11, 3, 7, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2095, 7, 21, 3, 7, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2096, 7, 22, 3, 7, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2097, 7, 23, 3, 7, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2098, 11, 21, 3, 11, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2099, 11, 22, 3, 22, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2100, 11, 23, 3, 23, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2101, 21, 22, 3, 21, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2102, 21, 23, 3, 23, 6, '1');
+INSERT INTO `perbandingan_alternatif` VALUES (2103, 22, 23, 3, 22, 6, '1');
+
+-- ----------------------------
+-- Table structure for perbandingan_kriteria
+-- ----------------------------
+DROP TABLE IF EXISTS `perbandingan_kriteria`;
+CREATE TABLE `perbandingan_kriteria`  (
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `kriteria1_seq` int NULL DEFAULT NULL,
+  `kriteria2_seq` int NULL DEFAULT NULL,
+  `pilihan_kriteria_seq` int NULL DEFAULT NULL,
+  `nilai` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`seq`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of perbandingan_kriteria
+-- ----------------------------
+INSERT INTO `perbandingan_kriteria` VALUES (1, 1, 2, 2, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (2, 1, 3, 1, '2');
+INSERT INTO `perbandingan_kriteria` VALUES (3, 1, 4, 1, '8');
+INSERT INTO `perbandingan_kriteria` VALUES (4, 1, 5, 1, '5');
+INSERT INTO `perbandingan_kriteria` VALUES (5, 1, 6, 6, '6');
+INSERT INTO `perbandingan_kriteria` VALUES (6, 2, 3, 3, '3');
+INSERT INTO `perbandingan_kriteria` VALUES (7, 2, 4, 2, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (8, 2, 5, 5, '3');
+INSERT INTO `perbandingan_kriteria` VALUES (9, 2, 6, 2, '8');
+INSERT INTO `perbandingan_kriteria` VALUES (10, 3, 4, 4, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (11, 3, 5, 5, '5');
+INSERT INTO `perbandingan_kriteria` VALUES (12, 3, 6, 3, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (13, 4, 5, 5, '4');
+INSERT INTO `perbandingan_kriteria` VALUES (14, 4, 6, 6, '5');
+INSERT INTO `perbandingan_kriteria` VALUES (15, 5, 6, 5, '9');
+
+-- ----------------------------
 -- Table structure for random_index
 -- ----------------------------
 DROP TABLE IF EXISTS `random_index`;
 CREATE TABLE `random_index`  (
-  `seq` int(200) NOT NULL AUTO_INCREMENT,
-  `size_matrics` int(200) NOT NULL,
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `size_matrics` int NOT NULL,
   `random_consistency` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   UNIQUE INDEX `Ukuran_Matriks`(`size_matrics`) USING BTREE,
@@ -330,15 +988,19 @@ INSERT INTO `random_index` VALUES (16, 15, '1.59');
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `user_seq` int(11) NOT NULL AUTO_INCREMENT,
+  `user_seq` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `akses` enum('Admin','User') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+INSERT INTO `user` VALUES (1, 'admin', 'YWRtaW4=', 'Admin');
+INSERT INTO `user` VALUES (2, 'user', 'dXNlcg==', 'User');
+INSERT INTO `user` VALUES (3, 'nurul', 'MTIzNDU2Nzg5', 'User');
+INSERT INTO `user` VALUES (4, 'janah', 'b2tva29r', 'User');
 
 SET FOREIGN_KEY_CHECKS = 1;
