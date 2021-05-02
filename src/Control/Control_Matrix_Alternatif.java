@@ -6,6 +6,7 @@
 package Control;
 
 import Connect.DBConnect;
+import Layout.Alternatif;
 import Layout.Matrix_Alternatif;
 import java.awt.Color;
 import java.awt.Component;
@@ -48,18 +49,120 @@ public class Control_Matrix_Alternatif {
     public void resetData(Matrix_Alternatif view) {
         buatKolomSesuai(view.jTable1);
     }
-
+    
     public void getData(Matrix_Alternatif view) {
         view.jTabbedPane1.setEnabledAt(1, false);
+        view.jTabbedPane1.setSelectedIndex(0);
+        view.jTabbedPane1.setEnabledAt(0, true);
+        view.jComboBox1.setSelectedItem("-PILIH-");
+        view.jComboBox2.setSelectedItem("-PILIH-");
+        view.jScrollPane2.setVisible(false);
         view.buttonGroup1.clearSelection();
         view.jLabel7.setVisible(false);
         view.jLabel8.setVisible(false);
+        view.jLabel10.setVisible(false);
+        view.jLabel9.setVisible(false);
         view.panelGlass2.setVisible(false);
-        getDataKriteria();
-        Matrix(view);
-        getPerbandinganKriteria(view);
         view.jButton3.setVisible(false);
-        view.jButton6.setVisible(false);
+        view.jButton4.setEnabled(false);
+        view.jLabel2.setVisible(false);
+        view.jComboBox1.setVisible(false);
+        comboKriteria(view);
+        comboKategori(view);
+        getDataAlternatif(view);
+        Matrix(view);
+        getPerbandinganAlternatif(view);
+    }
+
+    public void comboKriteria(Matrix_Alternatif view) {
+
+        String query2 = "SELECT\n"
+                + "kriteria.seq, \n"
+                + "kriteria.kriteria_name\n"
+                + "FROM\n"
+                + "kriteria";
+        
+        try {
+            Statement st = c.createStatement();
+            ResultSet r = st.executeQuery(query2);
+
+            for (int i = view.jComboBox2.getItemCount() - 1; i >= 1; i--) {
+                view.jComboBox2.removeItemAt(i);
+            }
+
+            while (r.next()) {
+                view.jComboBox2.addItem(r.getString("kriteria.kriteria_name"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void KriteriaCode(Matrix_Alternatif view) {
+        
+        String sub = (String) view.jComboBox2.getSelectedItem();
+        String query = "SELECT\n"
+                + "kriteria.seq, \n"
+                + "kriteria.kriteria_name\n"
+                + "FROM\n"
+                + "kriteria "
+                + "WHERE kriteria.kriteria_name = '" + sub + "'";
+        String id = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet r = st.executeQuery(query);
+            while (r.next()) {
+                id = r.getString("kriteria.seq");
+            }
+            view.jLabel9.setText(id + "");
+        } catch (Exception e) {
+        } finally {
+            getPerbandinganAlternatif(view);
+            view.jComboBox1.setSelectedItem("-PILIH-");
+            view.jLabel2.setVisible(true);
+            view.jComboBox1.setVisible(true);
+        }
+    }
+
+    public void comboKategori(Matrix_Alternatif view) {
+        String query2 = "SELECT\n"
+                + "kategori_alternatif.seq,\n"
+                + "kategori_alternatif.kategori_name\n"
+                + "FROM\n"
+                + "kategori_alternatif";
+        
+        try {
+            Statement st = c.createStatement();
+            ResultSet r = st.executeQuery(query2);
+
+            for (int i = view.jComboBox1.getItemCount() - 1; i >= 1; i--) {
+                view.jComboBox1.removeItemAt(i);
+            }
+
+            while (r.next()) {
+                view.jComboBox1.addItem(r.getString("kategori_alternatif.kategori_name"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void KategoriCode(Matrix_Alternatif view) {
+        String sub = (String) view.jComboBox1.getSelectedItem();
+        String query = "select * from kategori_alternatif where kategori_name = '" + sub + "'";
+        String id = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet r = st.executeQuery(query);
+            while (r.next()) {
+                id = r.getString("kategori_alternatif.seq");
+            }
+            view.jLabel10.setText(id + "");
+        } catch (Exception e) {
+        } finally {
+            getDataAlternatif(view);
+            Matrix(view);
+            getPerbandinganAlternatif(view);
+            view.jButton4.setEnabled(true);
+        }
     }
 
     public void buatKolomSesuai(JTable t) {
@@ -126,8 +229,8 @@ public class Control_Matrix_Alternatif {
             }
         };
         headerTable = new JTable(model);
-        List<HashMap<String, Object>> df = getDataKriteria();
-        for (int i = 0; i < getJumlah(); i++) {
+        List<HashMap<String, Object>> df = getDataAlternatif(view);
+        for (int i = 0; i < getJumlah(view); i++) {
             String aa = df.get(i).get("nama").toString();
             headerTable.setValueAt(aa, i, 0);
             headerTable.setValueAt("Jumlah", i + 1, 0);
@@ -183,8 +286,8 @@ public class Control_Matrix_Alternatif {
             }
         };
         headerTable = new JTable(model);
-        List<HashMap<String, Object>> df = getDataKriteria();
-        for (int i = 0; i < getJumlah(); i++) {
+        List<HashMap<String, Object>> df = getDataAlternatif(view);
+        for (int i = 0; i < getJumlah(view); i++) {
             String aa = df.get(i).get("nama").toString();
             headerTable.setValueAt(aa, i, 0);
         }
@@ -211,16 +314,23 @@ public class Control_Matrix_Alternatif {
         view.jTable3.setPreferredScrollableViewportSize(view.jTable3.getPreferredSize());
     }
 
-    public int getJumlah() {
+    public int getJumlah(Matrix_Alternatif view) {
 
         int jumlah = 0;
-
+        
         try {
             String sql = "SELECT\n"
-                    + "kriteria.seq,\n"
-                    + "kriteria.kriteria_name\n"
+                    + "alternatif.seq, \n"
+                    + "alternatif.alternatif_name, \n"
+                    + "alternatif.kategori_seq, \n"
+                    + "kategori_alternatif.kategori_name\n"
                     + "FROM\n"
-                    + "kriteria";
+                    + "alternatif\n"
+                    + "INNER JOIN\n"
+                    + "kategori_alternatif\n"
+                    + "ON \n"
+                    + "alternatif.kategori_seq = kategori_alternatif.seq\n"
+                    + "WHERE alternatif.kategori_seq = '"+view.jLabel10.getText()+"'";
 
             Statement st = c.createStatement();
             ResultSet r = st.executeQuery(sql);
@@ -234,24 +344,33 @@ public class Control_Matrix_Alternatif {
         return jumlah;
     }
 
-    public List<HashMap<String, Object>> getDataKriteria() {
+    public List<HashMap<String, Object>> getDataAlternatif(Matrix_Alternatif view) {
 
         List<HashMap<String, Object>> maps = new ArrayList<HashMap<String, Object>>();
 
         try {
             String sql = "SELECT\n"
-                    + "kriteria.seq,\n"
-                    + "kriteria.kriteria_name\n"
+                    + "alternatif.seq, \n"
+                    + "alternatif.alternatif_name, \n"
+                    + "alternatif.kategori_seq, \n"
+                    + "kategori_alternatif.kategori_name\n"
                     + "FROM\n"
-                    + "kriteria";
+                    + "alternatif\n"
+                    + "INNER JOIN\n"
+                    + "kategori_alternatif\n"
+                    + "ON \n"
+                    + "alternatif.kategori_seq = kategori_alternatif.seq\n"
+                    + "WHERE alternatif.kategori_seq = '"+view.jLabel10.getText()+"'";
 
             Statement st = c.createStatement();
             ResultSet r = st.executeQuery(sql);
 
             while (r.next()) {
+                
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("id", r.getString("kriteria.seq"));
-                map.put("nama", r.getString("kriteria.kriteria_name"));
+                map.put("id", r.getString("alternatif.seq"));
+                map.put("nama", r.getString("alternatif.alternatif_name"));
+                map.put("idKategori", r.getString("alternatif.kategori_seq"));
 
                 maps.add(map);
             }
@@ -263,11 +382,11 @@ public class Control_Matrix_Alternatif {
 
     public void Matrix(Matrix_Alternatif view) {
 
-        int a = getJumlah();
+        int a = getJumlah(view);
 
         String[] cs = new String[a];
 
-        List<HashMap<String, Object>> df = getDataKriteria();
+        List<HashMap<String, Object>> df = getDataAlternatif(view);
 
         for (int i = 0; i < a; i++) {
             cs[i] = df.get(i).get("nama").toString();
@@ -298,50 +417,54 @@ public class Control_Matrix_Alternatif {
         for (int i = 0; i < rCon; i++) {
             for (int j = i + 1; j < rCon; j++) {
                 try {
-                    String sql = "SELECT\n"
-                            + "perbandingan_kriteria.seq, \n"
-                            + "perbandingan_kriteria.kriteria1_seq, \n"
-                            + "perbandingan_kriteria.kriteria2_seq, \n"
-                            + "perbandingan_kriteria.pilihan_kriteria_seq, \n"
-                            + "perbandingan_kriteria.nilai, \n"
-                            + "kriteria.kriteria_name\n"
-                            + "FROM\n"
-                            + "perbandingan_kriteria\n"
-                            + "INNER JOIN kriteria ON perbandingan_kriteria.pilihan_kriteria_seq = kriteria.seq\n"
-                            + "WHERE\n"
-                            + "kriteria1_seq = '" + df.get(i).get("id").toString() + "' AND\n"
-                            + "kriteria2_seq = '" + df.get(j).get("id").toString() + "'";
 
+                    String sql = "SELECT\n"
+                            + "	perbandingan_alternatif.seq, \n"
+                            + "	perbandingan_alternatif.alternatif1_seq, \n"
+                            + "	perbandingan_alternatif.alternatif2_seq, \n"
+                            + "	perbandingan_alternatif.kategori_seq, \n"
+                            + "	perbandingan_alternatif.pilihan_alternatif_seq, \n"
+                            + "	perbandingan_alternatif.kriteria_seq, \n"
+                            + "	perbandingan_alternatif.nilai, \n"
+                            + "	alternatif.alternatif_name\n"
+                            + "FROM\n"
+                            + "	perbandingan_alternatif\n"
+                            + "	INNER JOIN alternatif ON perbandingan_alternatif.pilihan_alternatif_seq = alternatif.seq\n"
+                            + "WHERE perbandingan_alternatif.kategori_seq = '" + view.jLabel10.getText() + "'\n"
+                            + "AND perbandingan_alternatif.kriteria_seq = '" + view.jLabel9.getText() + "'\n"
+                            + "AND perbandingan_alternatif.alternatif1_seq = '" + df.get(i).get("id").toString() + "'\n"
+                            + "AND perbandingan_alternatif.alternatif2_seq ='" + df.get(j).get("id").toString() + "'";
+                            
                     Statement st = c.createStatement();
                     ResultSet r = st.executeQuery(sql);
 
                     BigDecimal nilai = BigDecimal.ONE;
-                    int kriteria1_seq = 0;
-                    int kriteria2_seq = 0;
-                    int pilihan_kriteria_seq = 0;
+                    int alternatif1_seq = 0;
+                    int alternatif2_seq = 0;
+                    int pilihan_alternatif_seq = 0;
 
                     while (r.next()) {
 
-                        nilai = new BigDecimal(r.getString("perbandingan_kriteria.nilai"));
-                        kriteria1_seq = r.getInt("perbandingan_kriteria.kriteria1_seq");
-                        kriteria2_seq = r.getInt("perbandingan_kriteria.kriteria2_seq");
-                        pilihan_kriteria_seq = r.getInt("perbandingan_kriteria.pilihan_kriteria_seq");
+                        nilai = new BigDecimal(r.getString("perbandingan_alternatif.nilai"));
+                        alternatif1_seq = r.getInt("perbandingan_alternatif.alternatif1_seq");
+                        alternatif2_seq = r.getInt("perbandingan_alternatif.alternatif2_seq");
+                        pilihan_alternatif_seq = r.getInt("perbandingan_alternatif.pilihan_alternatif_seq");
 
                     }
                     
-                    System.out.println("kriteria1_seq : "+kriteria1_seq);
-                    System.out.println("kriteria2_seq : "+kriteria2_seq);
-                    System.out.println("pilihan_kriteria_seq : "+pilihan_kriteria_seq);
+                    System.out.println("kriteria1_seq : "+alternatif1_seq);
+                    System.out.println("kriteria2_seq : "+alternatif2_seq);
+                    System.out.println("pilihan_kriteria_seq : "+pilihan_alternatif_seq);
                     System.out.println("nilai : "+nilai);
                     
                     DecimalFormat format = new DecimalFormat("#.###");
                     
                     BigDecimal hasilnilai = BigDecimal.ZERO;
                     
-                    if (kriteria1_seq == pilihan_kriteria_seq) {
+                    if (alternatif1_seq == pilihan_alternatif_seq) {
                         hasilnilai = nilai.divide(new BigDecimal(BigInteger.ONE), 15, RoundingMode.HALF_EVEN);
                         hasilnilai.setScale(6, RoundingMode.HALF_EVEN);
-                    }else if (kriteria2_seq == pilihan_kriteria_seq){
+                    }else if (alternatif2_seq == pilihan_alternatif_seq){
                         hasilnilai = new BigDecimal(BigInteger.ONE).divide(nilai, 15, RoundingMode.HALF_EVEN);
                         hasilnilai.setScale(6, RoundingMode.HALF_EVEN);
                     }
@@ -364,10 +487,11 @@ public class Control_Matrix_Alternatif {
 
         DecimalFormat batas = new DecimalFormat("#.###");
 
-        List<HashMap<String, Object>> df = getDataKriteria();
+        List<HashMap<String, Object>> df = getDataAlternatif(view);
 
         view.jScrollPane3.setRowHeader(null);
-        int a1 = getJumlah();
+        int a1 = getJumlah(view);
+        
         String[] c2 = new String[a1 + 1];
         String[] c1 = new String[a1 + 1 + 1];
         for (int i = 0; i < a1; i++) {
@@ -423,7 +547,7 @@ public class Control_Matrix_Alternatif {
                 }
             }
 
-            int a = getJumlah();
+            int a = getJumlah(view);
             double baris = 0.0;
             double eigen = 0.0;
             double q1 = 0.0;
@@ -506,7 +630,7 @@ public class Control_Matrix_Alternatif {
         DecimalFormat batas = new DecimalFormat("#.###");
 
         double hasilCI = 0.0;
-        int elemen = getJumlah();
+        int elemen = getJumlah(view);
         double CR = Double.parseDouble(view.buttonGlass2.getText().replaceAll("Consistency Index : ", ""));
         String query = "select random_consistency from random_index where size_matrics = '" + elemen + "'";
         try {
@@ -520,13 +644,13 @@ public class Control_Matrix_Alternatif {
             view.buttonGlass3.setText("Consistency Rasio : " + batas.format(hasilCI) + " < 0.1");
         } catch (SQLException ex) {
         } finally {
-            int jum = getJumlah();
+            int jum = getJumlah(view);
             if (jum == 2) {
                 JOptionPane.showMessageDialog(view, "CR Value Is Consistent!", "Correct", JOptionPane.INFORMATION_MESSAGE);
             } else if (jum == 1) {
                 JOptionPane.showMessageDialog(view, "CR Value Is Consistent!", "Correct", JOptionPane.INFORMATION_MESSAGE);
             } else if (hasilCI < 0.1) {
-                view.buttonGlass3.setForeground(Color.BLUE);
+                view.buttonGlass3.setForeground(Color.YELLOW);
                 JOptionPane.showMessageDialog(view, "CR value is Consistent!\nThat is : " + view.buttonGlass3.getText() + "", "Correct", JOptionPane.INFORMATION_MESSAGE);
                 saveProccess(view);
             } else {
@@ -535,7 +659,7 @@ public class Control_Matrix_Alternatif {
                 view.jTabbedPane1.setEnabledAt(1, false);
                 view.jTabbedPane1.setSelectedIndex(0);
                 view.jTabbedPane1.setEnabledAt(0, true);
-                getData(view);
+                view.jButton4.setEnabled(false);
             }
         }
     }
@@ -548,25 +672,30 @@ public class Control_Matrix_Alternatif {
             int t1551 = 0;
             int row551 = view.jTable3.getRowCount();
 
-            String sqlq = "TRUNCATE TABLE eigen_kriteria";
+            String sqlq = "DELETE FROM eigen_alternatif\n"
+                    + "WHERE kategori_seq = '"+view.jLabel10.getText()+"' AND kriteria_seq = '"+view.jLabel9.getText()+"'";
 
             PreparedStatement p22 = c.prepareStatement(sqlq);
             p22.executeUpdate();
             p22.close();
 
-            List<HashMap<String, Object>> df = getDataKriteria();
+            List<HashMap<String, Object>> df = getDataAlternatif(view);
 
             for (xx551 = 0; xx551 < row551; xx551++) {
 
                 int id = Integer.parseInt(df.get(xx551).get("id").toString());
+                int idKategori = Integer.parseInt(df.get(xx551).get("idKategori").toString());
+                
                 for (t1551 = 0; t1551 < row551; t1551++) {
                     eigen551 = Double.parseDouble(view.jTable3.getValueAt(xx551, t1551 + 1).toString());
                 }
 
-                String sql = "insert into eigen_kriteria set \n"
+                String sql = "insert into eigen_alternatif set \n"
                         + "eigen_value ='" + eigen551 + "',\n"
                         + "date = CURDATE(),"
-                        + "kriteria_seq ='" + id + "'";
+                        + "alternatif_seq = '"+id+"',"
+                        + "kriteria_seq = '"+view.jLabel9.getText()+"',"
+                        + "kategori_seq ='" + view.jLabel10.getText() + "'";
 
                 PreparedStatement p221 = c.prepareStatement(sql);
                 p221.executeUpdate();
@@ -578,23 +707,23 @@ public class Control_Matrix_Alternatif {
         }
     }
 
-    public void getPerbandinganKriteria(Matrix_Alternatif view) {
+    public void getPerbandinganAlternatif(Matrix_Alternatif view) {
 
         try {
 
             DefaultTableModel tabelKej = new DefaultTableModel();
             tabelKej.addColumn("No");
             tabelKej.addColumn("Seq 1");
-            tabelKej.addColumn("Nama Kriteria 1");
+            tabelKej.addColumn("Nama Alternatif 1");
             tabelKej.addColumn("Seq 2");
-            tabelKej.addColumn("Nama Kriteria 2");
+            tabelKej.addColumn("Nama Alternatif 2");
             tabelKej.addColumn("Seq Pilihan");
-            tabelKej.addColumn("Kriteria Pilihan");
+            tabelKej.addColumn("Alternatif Pilihan");
             tabelKej.addColumn("Nilai");
 
-            int a = getJumlah();
+            int a = getJumlah(view);
 
-            List<HashMap<String, Object>> df = getDataKriteria();
+            List<HashMap<String, Object>> df = getDataAlternatif(view);
 
             int no = 0;
 
@@ -610,20 +739,23 @@ public class Control_Matrix_Alternatif {
                     vector.addElement(df.get(i).get("id").toString());
                     vector.addElement(df.get(i).get("nama").toString());
 
-                    String sql = "SELECT\n"
-                            + "perbandingan_kriteria.seq, \n"
-                            + "perbandingan_kriteria.kriteria1_seq, \n"
-                            + "perbandingan_kriteria.kriteria2_seq, \n"
-                            + "perbandingan_kriteria.pilihan_kriteria_seq, \n"
-                            + "perbandingan_kriteria.nilai, \n"
-                            + "kriteria.kriteria_name\n"
+                    String sql = "SELECT\n" 
+                            + "	perbandingan_alternatif.seq, \n"
+                            + "	perbandingan_alternatif.alternatif1_seq, \n"
+                            + "	perbandingan_alternatif.alternatif2_seq, \n"
+                            + "	perbandingan_alternatif.kategori_seq, \n"
+                            + "	perbandingan_alternatif.pilihan_alternatif_seq, \n"
+                            + "	perbandingan_alternatif.kriteria_seq, \n"
+                            + "	perbandingan_alternatif.nilai, \n"
+                            + "	alternatif.alternatif_name\n"
                             + "FROM\n"
-                            + "perbandingan_kriteria\n"
-                            + "INNER JOIN kriteria ON perbandingan_kriteria.pilihan_kriteria_seq = kriteria.seq\n"
-                            + "WHERE\n"
-                            + "kriteria1_seq = '" + df.get(j).get("id").toString() + "' AND\n"
-                            + "kriteria2_seq = '" + df.get(i).get("id").toString() + "'";
-
+                            + "	perbandingan_alternatif\n"
+                            + "	INNER JOIN alternatif ON perbandingan_alternatif.pilihan_alternatif_seq = alternatif.seq\n"
+                            + "WHERE perbandingan_alternatif.kategori_seq = '" + view.jLabel10.getText() + "'\n"
+                            + "AND perbandingan_alternatif.kriteria_seq = '" + view.jLabel9.getText() + "'\n"
+                            + "AND perbandingan_alternatif.alternatif1_seq = '" + df.get(j).get("id").toString() + "'\n"
+                            + "AND perbandingan_alternatif.alternatif2_seq ='" + df.get(i).get("id").toString() + "'";
+                    
                     Statement st = c.createStatement();
                     ResultSet r = st.executeQuery(sql);
 
@@ -633,9 +765,9 @@ public class Control_Matrix_Alternatif {
 
                     while (r.next()) {
 
-                        idPilihan = r.getInt("perbandingan_kriteria.pilihan_kriteria_seq");
-                        namaPilihan = r.getString("kriteria.kriteria_name");
-                        nilai = new BigDecimal(r.getString("perbandingan_kriteria.nilai"));
+                        idPilihan = r.getInt("perbandingan_alternatif.pilihan_alternatif_seq");
+                        namaPilihan = r.getString("alternatif.alternatif_name");
+                        nilai = new BigDecimal(r.getString("perbandingan_alternatif.nilai"));
 
                     }
 
@@ -679,33 +811,40 @@ public class Control_Matrix_Alternatif {
                 }
             }
 
-            String sqls = "SELECT \n"
-                    + "perbandingan_kriteria.seq, \n"
-                    + "perbandingan_kriteria.kriteria1_seq, \n"
-                    + "perbandingan_kriteria.kriteria2_seq, \n"
-                    + "perbandingan_kriteria.pilihan_kriteria_seq, \n"
-                    + "perbandingan_kriteria.nilai, \n"
-                    + "kriteria.kriteria_name \n"
-                    + "FROM perbandingan_kriteria \n"
-                    + "INNER JOIN kriteria ON perbandingan_kriteria.pilihan_kriteria_seq = kriteria.seq \n"
-                    + "WHERE perbandingan_kriteria.kriteria1_seq = '" + view.jLabel7.getText() + "' \n"
-                    + "AND perbandingan_kriteria.kriteria2_seq = '" + view.jLabel8.getText() + "'";
-            
+            String sqls = "SELECT\n"
+                    + "	perbandingan_alternatif.seq, \n"
+                    + "	perbandingan_alternatif.alternatif1_seq, \n"
+                    + "	perbandingan_alternatif.alternatif2_seq, \n"
+                    + "	perbandingan_alternatif.kategori_seq, \n"
+                    + "	perbandingan_alternatif.pilihan_alternatif_seq, \n"
+                    + "	perbandingan_alternatif.kriteria_seq, \n"
+                    + "	perbandingan_alternatif.nilai, \n"
+                    + "	alternatif.alternatif_name\n"
+                    + "FROM\n"
+                    + "	perbandingan_alternatif\n"
+                    + "	INNER JOIN alternatif ON perbandingan_alternatif.pilihan_alternatif_seq = alternatif.seq\n"
+                    + "WHERE perbandingan_alternatif.kategori_seq = '" + view.jLabel10.getText() + "'\n"
+                    + "AND perbandingan_alternatif.kriteria_seq = '" + view.jLabel9.getText() + "'\n"
+                    + "AND perbandingan_alternatif.alternatif1_seq = '" + view.jLabel7.getText() + "'\n"
+                    + "AND perbandingan_alternatif.alternatif2_seq ='" + view.jLabel8.getText() + "'";
+
             Statement st = c.createStatement();
             ResultSet r = st.executeQuery(sqls);
 
             int idPilihan = 0;
 
             while (r.next()) {
-                idPilihan = r.getInt("perbandingan_kriteria.pilihan_kriteria_seq");
+                idPilihan = r.getInt("perbandingan_alternatif.pilihan_alternatif_seq");
             }
             
             if (idPilihan == 0) {
                 
-                String sql = "insert into perbandingan_kriteria set \n"
-                        + "kriteria1_seq ='" + view.jLabel7.getText() + "',\n"
-                        + "kriteria2_seq = '" + view.jLabel8.getText() + "',"
-                        + "pilihan_kriteria_seq = '" + idTerpilih + "',"
+                String sql = "insert into perbandingan_alternatif set \n"
+                        + "alternatif1_seq ='" + view.jLabel7.getText() + "',\n"
+                        + "alternatif2_seq = '" + view.jLabel8.getText() + "',"
+                        + "kriteria_seq = '" + view.jLabel9.getText() + "',"
+                        + "kategori_seq = '" + view.jLabel10.getText() + "',"
+                        + "pilihan_alternatif_seq = '" + idTerpilih + "',"
                         + "nilai ='" + view.jTextField3.getText() + "'";
 
                 PreparedStatement p221 = c.prepareStatement(sql);
@@ -717,18 +856,23 @@ public class Control_Matrix_Alternatif {
             
             }else{
                 
-                String sql = "update perbandingan_kriteria \n"
-                        + "set pilihan_kriteria_seq='" + idTerpilih + "', \n"
+                String sql = "update perbandingan_alternatif \n"
+                        + "set pilihan_alternatif_seq='" + idTerpilih + "', \n"
+                        + "kriteria_seq='" + view.jLabel9.getText() + "',\n"
+                        + "kategori_seq='" + view.jLabel10.getText() + "',\n"
                         + "nilai='" + view.jTextField3.getText() + "'\n"
-                        + "where kriteria1_seq= '" + view.jLabel7.getText()+"'\n"
-                        + "AND kriteria2_seq= '" + view.jLabel8.getText()+"'";
+                        + "where alternatif1_seq= '" + view.jLabel7.getText()+"'\n"
+                        + "AND alternatif2_seq= '" + view.jLabel8.getText()+"'";
 
                 PreparedStatement p22 = c.prepareStatement(sql);
                 p22.executeUpdate();
                 p22.close();
                 
                 JOptionPane.showMessageDialog(view, "Data successfully save", "Message", JOptionPane.INFORMATION_MESSAGE);
-                getData(view);
+//                getData(view);
+                getDataAlternatif(view);
+                Matrix(view);
+                getPerbandinganAlternatif(view);
             }
             
             
@@ -744,11 +888,12 @@ public class Control_Matrix_Alternatif {
         view.jTextField3.setText(view.jTable4.getValueAt(row, 7) + "");
         view.jRadioButton1.setText(view.jTable4.getValueAt(row, 2).toString());
         view.jRadioButton2.setText(view.jTable4.getValueAt(row, 4).toString());
+        
         if (view.jTable4.getValueAt(row, 2).toString().equals(view.jTable4.getValueAt(row, 6).toString())) {
             view.jRadioButton1.setSelected(true);
-        }else if(view.jTable4.getValueAt(row, 4).toString().equals(view.jTable4.getValueAt(row, 6).toString())){
+        } else if (view.jTable4.getValueAt(row, 4).toString().equals(view.jTable4.getValueAt(row, 6).toString())) {
             view.jRadioButton2.setSelected(true);
-        }else{
+        } else {
             view.buttonGroup1.clearSelection();
         }
         view.panelGlass2.setVisible(true);
@@ -757,8 +902,9 @@ public class Control_Matrix_Alternatif {
     public void saveProccessMatrixAll(Matrix_Alternatif view) {
 
         try {
-            
-            String sqsl = "TRUNCATE TABLE perbandingan_kriteria";
+
+            String sqsl = "DELETE FROM perbandingan_alternatif\n"
+                    + "WHERE kategori_seq = '"+view.jLabel10.getText()+"' AND kriteria_seq = '"+view.jLabel9.getText()+"'";
 
             PreparedStatement p221s = c.prepareStatement(sqsl);
             p221s.executeUpdate();
@@ -766,10 +912,12 @@ public class Control_Matrix_Alternatif {
             
             for (int i = 0; i < view.jTable4.getRowCount(); i++) {
                 
-                String sql = "insert into perbandingan_kriteria set \n"
-                        + "kriteria1_seq ='" + view.jTable4.getValueAt(i, 1) + "',\n"
-                        + "kriteria2_seq = '" + view.jTable4.getValueAt(i, 3) + "',"
-                        + "pilihan_kriteria_seq = '" + view.jTable4.getValueAt(i, 5) + "',"
+                String sql = "insert into perbandingan_alternatif set \n"
+                        + "alternatif1_seq ='" + view.jTable4.getValueAt(i, 1) + "',\n"
+                        + "alternatif2_seq = '" + view.jTable4.getValueAt(i, 3) + "',"
+                        + "kriteria_seq = '" + view.jLabel9.getText() + "',"
+                        + "kategori_seq = '" + view.jLabel10.getText() + "',"
+                        + "pilihan_alternatif_seq = '" + view.jTable4.getValueAt(i, 5) + "',"
                         + "nilai ='" + view.jTable4.getValueAt(i, 7) + "'";
 
                 PreparedStatement p221 = c.prepareStatement(sql);
@@ -777,10 +925,12 @@ public class Control_Matrix_Alternatif {
                 p221.close();
                 
             }
-            
+
         } catch (SQLException e) {
-        } finally{
-            getData(view);
+        } finally {
+            Matrix(view);
+            view.panelGlass2.setVisible(false);
+            getPerbandinganAlternatif(view);
         }
     }
 }

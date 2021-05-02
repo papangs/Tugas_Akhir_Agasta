@@ -46,20 +46,24 @@ public class Control_Matrix_Kriteria {
     Statement s;
 
     public void resetData(Matrix_Kriteria view) {
-        buatKolomSesuai(view.jTable1);
+        buatKolomSesuai(view.jTable4);
     }
 
     public void getData(Matrix_Kriteria view) {
         view.jTabbedPane1.setEnabledAt(1, false);
+        view.jTabbedPane1.setSelectedIndex(0);
+        view.jTabbedPane1.setEnabledAt(0, true);
         view.buttonGroup1.clearSelection();
         view.jLabel7.setVisible(false);
         view.jLabel8.setVisible(false);
+        view.jLabel9.setVisible(false);
         view.panelGlass2.setVisible(false);
         getDataKriteria();
         Matrix(view);
         getPerbandinganKriteria(view);
         view.jButton3.setVisible(false);
-        view.jButton6.setVisible(false);
+        view.jButton6.setVisible(true);
+        view.jScrollPane2.setVisible(false);
     }
 
     public void buatKolomSesuai(JTable t) {
@@ -526,7 +530,7 @@ public class Control_Matrix_Kriteria {
             } else if (jum == 1) {
                 JOptionPane.showMessageDialog(view, "CR Value Is Consistent!", "Correct", JOptionPane.INFORMATION_MESSAGE);
             } else if (hasilCI < 0.1) {
-                view.buttonGlass3.setForeground(Color.BLUE);
+                view.buttonGlass3.setForeground(Color.YELLOW);
                 JOptionPane.showMessageDialog(view, "CR value is Consistent!\nThat is : " + view.buttonGlass3.getText() + "", "Correct", JOptionPane.INFORMATION_MESSAGE);
                 saveProccess(view);
             } else {
