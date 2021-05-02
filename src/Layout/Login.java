@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Base64;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,13 +33,11 @@ public class Login extends javax.swing.JFrame {
 
     public void aksi_login() {
         try {
-
+            
+            String password = Base64.getEncoder().encodeToString(jPasswordField1.getText().getBytes());
             String akses = "";
             String userakses = "";
-            
-            String password = encrypt(jPasswordField1.getText());
-            
-            String sql = "SELECT user.user_seq, user.username, user.password FROM user "
+            String sql = "SELECT user.user_seq, user.username, user.password, user.akses FROM user "
                     + "WHERE username='" + jTextField1.getText().replaceAll("'", "") + "' "
                     + "AND password = '" + password + "'";
 
@@ -47,10 +46,12 @@ public class Login extends javax.swing.JFrame {
             String level = "";
 
             while (r.next()) {
+                userakses = r.getString("akses");
                 akses = "-";
 
                 this.setVisible(false);
                 op.setVisible(true);
+                op.panggil(userakses);
             }
 
             if (akses.equals("")) {
@@ -62,36 +63,7 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
     }
-
-    public String encrypt(String str) {
-
-        String SHA = "";
-
-        try {
-
-            MessageDigest sh = MessageDigest.getInstance("SHA-256");
-            sh.update(str.getBytes());
-            byte byteData[] = sh.digest();
-            StringBuffer sb = new StringBuffer();
-
-            for (int i = 0; i < byteData.length; i++) {
-
-                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-
-            }
-
-            SHA = sb.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-
-            e.printStackTrace();
-            SHA = null;
-
-        }
-
-        return SHA;
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

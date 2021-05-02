@@ -8,7 +8,7 @@ package Layout;
 import Control.Control_Alternatif;
 import Control.Control_Kriteria;
 import Control.Control_Main;
-import Control.Control_Password;
+import Control.Control_UserAdmin;
 import Control.Control_Alternatif_Kriteria;
 import Control.Control_Matrix_Alternatif;
 import Control.Control_Matrix_Kriteria;
@@ -35,7 +35,7 @@ public class Main extends javax.swing.JFrame {
     
     Control_Kriteria control;
     Control_Alternatif controla;
-    Control_Password controlem;
+    Control_UserAdmin controlem;
     Control_Alternatif_Kriteria controlsim;
     Control_Main controlmain;
     Control_Matrix_Kriteria controlm;
@@ -45,7 +45,7 @@ public class Main extends javax.swing.JFrame {
     Kriteria a;
     Alternatif_Kriteria b;
     Alternatif c;
-    Change_Password f;
+    UserAdmin f;
     Matrix_Kriteria m;
     Perangkingan p;
     Matrix_Alternatif al;
@@ -60,20 +60,20 @@ public class Main extends javax.swing.JFrame {
         a = new Kriteria();
         b = new Alternatif_Kriteria();
         c = new Alternatif();
-        f = new Change_Password();
+        f = new UserAdmin();
         m = new Matrix_Kriteria();
         p = new Perangkingan();
         al = new Matrix_Alternatif();
         
         control = new Control_Kriteria();
         controla = new Control_Alternatif();
-        controlem = new Control_Password();
+        controlem = new Control_UserAdmin();
         controlsim = new Control_Alternatif_Kriteria();
         controlm = new Control_Matrix_Kriteria();
         controlp = new Control_Perangkingan();
         controlal = new Control_Matrix_Alternatif();
         
-        buttonImageReflection2.setVisible(false);
+//        buttonImageReflection2.setVisible(false);
     }
     
     public final void setJam() {
@@ -106,6 +106,25 @@ public class Main extends javax.swing.JFrame {
             }
         };
         new javax.swing.Timer(1000, taskPerformer).start();
+    }
+    
+    public void panggil(String userlogin) {
+        switch (userlogin) {
+            case "User":
+                enable(true);
+                break;
+            case "Admin":
+                enable(false);
+                break;
+        }
+    }
+    
+    public void enable(boolean status) {
+        jMenu4.setVisible(!status);
+        buttonImageReflection1.setVisible(!status);
+        buttonImageReflection2.setVisible(!status);
+        buttonImageReflection3.setVisible(!status);
+        buttonImageReflection4.setVisible(!status);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,12 +161,8 @@ public class Main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Sistem Penunjang Keputusan Pemilihan VGA Gamming Terbaik Menggunakan Analytical Hierarchy Process (AHP)");
@@ -158,7 +173,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection1.setForeground(new java.awt.Color(51, 0, 51));
-        buttonImageReflection1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493277130_Finance_financial_report.png"))); // NOI18N
+        buttonImageReflection1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1461876790_stock_task-assigned-to copy.png"))); // NOI18N
         buttonImageReflection1.setText("Kriteria");
         buttonImageReflection1.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection1.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +183,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection2.setForeground(new java.awt.Color(0, 0, 0));
-        buttonImageReflection2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493393979_Finance_finance_caaslculator.png"))); // NOI18N
+        buttonImageReflection2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1465288918_Briefcase.png"))); // NOI18N
         buttonImageReflection2.setText("Alternatif Kriteria");
         buttonImageReflection2.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection2.setName(""); // NOI18N
@@ -179,7 +194,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection3.setForeground(new java.awt.Color(51, 0, 51));
-        buttonImageReflection3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493405495_29.png"))); // NOI18N
+        buttonImageReflection3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1461997018_drive-harddisk-system.png"))); // NOI18N
         buttonImageReflection3.setText("Altefnatif");
         buttonImageReflection3.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection3.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +204,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection4.setForeground(new java.awt.Color(0, 0, 0));
-        buttonImageReflection4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493393979_Finance_finance_caaslculator.png"))); // NOI18N
+        buttonImageReflection4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493405495_29.png"))); // NOI18N
         buttonImageReflection4.setText("Matrix Kriteria");
         buttonImageReflection4.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection4.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +214,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection5.setForeground(new java.awt.Color(51, 0, 51));
-        buttonImageReflection5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493393979_Finance_finance_caaslculator.png"))); // NOI18N
+        buttonImageReflection5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1461996712_tests.png"))); // NOI18N
         buttonImageReflection5.setText("Hasil Rangking");
         buttonImageReflection5.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection5.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +224,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         buttonImageReflection6.setForeground(new java.awt.Color(0, 0, 0));
-        buttonImageReflection6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493393979_Finance_finance_caaslculator.png"))); // NOI18N
+        buttonImageReflection6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1462699640_draw-path.png"))); // NOI18N
         buttonImageReflection6.setText("Matrix Alternatif");
         buttonImageReflection6.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
         buttonImageReflection6.addActionListener(new java.awt.event.ActionListener() {
@@ -223,14 +238,15 @@ public class Main extends javax.swing.JFrame {
         panelGlass1Layout.setHorizontalGroup(
             panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGlass1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(buttonImageReflection1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonImageReflection4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonImageReflection6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonImageReflection5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonImageReflection2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(buttonImageReflection3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonImageReflection6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonImageReflection3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonImageReflection1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonImageReflection2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(buttonImageReflection4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonImageReflection5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelGlass1Layout.setVerticalGroup(
             panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +263,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(buttonImageReflection6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonImageReflection5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
@@ -282,7 +298,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelGlass2Layout.setVerticalGroup(
@@ -379,13 +395,13 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelGlass2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator4)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneGambar1Layout.createSequentialGroup()
+                    .addGroup(jDesktopPaneGambar1Layout.createSequentialGroup()
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jDesktopPanetransparan1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jSeparator7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelGlass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -406,7 +422,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
                         .addGroup(jDesktopPaneGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDesktopPanetransparan1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDesktopPanetransparan1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                             .addComponent(jSeparator5)
                             .addComponent(jSeparator6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -441,50 +457,23 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Master");
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493277130_Finance_fiasnancial_report.png"))); // NOI18N
-        jMenuItem1.setText("Kriteria");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/149340549asas5_29.png"))); // NOI18N
-        jMenuItem2.setText("Alternatif");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Process");
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/1493393979_Finance_finance_calculator.png"))); // NOI18N
-        jMenuItem4.setText("Proses Rangking");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Change Paswword");
+        jMenu4.setText("User Admin");
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu4MouseClicked(evt);
             }
         });
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/student_list.png"))); // NOI18N
+        jMenuItem1.setText("Add User");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem1);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -492,7 +481,7 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void buttonImageReflection1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection1ActionPerformed
         // TODO add your handling code here:
         if (!a.isVisible()) {
             try {
@@ -512,11 +501,6 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void buttonImageReflection1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection1ActionPerformed
-        // TODO add your handling code here:
-        jMenuItem1ActionPerformed(evt);
     }//GEN-LAST:event_buttonImageReflection1ActionPerformed
 
     private void buttonImageReflection2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection2ActionPerformed
@@ -540,52 +524,6 @@ public class Main extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_buttonImageReflection2ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-//        if (!b.isVisible()) {
-//            try {
-//                jDesktopPanetransparan1.add(b);
-//                controlsim.getData(b);
-//                controlsim.comboEmitem(b);
-//                b.show();
-//                b.setSelected(true);
-//            } catch (PropertyVetoException ex) {
-//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else {
-//            try {
-//                controlsim.getData(b);
-//                controlsim.comboEmitem(b);
-//                b.show();
-//                b.setSelected(true);
-//            } catch (PropertyVetoException ex) {
-//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        if (!c.isVisible()) {
-            try {
-                jDesktopPanetransparan1.add(f);
-                controlem.getData(f);
-                c.show();
-                c.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                controlem.getData(f);
-                c.show();
-                c.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void buttonImageReflection3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection3ActionPerformed
         // TODO add your handling code here:
@@ -634,24 +572,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-        if (!f.isVisible()) {
-            try {
-                controlem.getData(f);
-                jDesktopPanetransparan1.add(f);
-                f.show();
-                f.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                controlem.getData(f);
-                f.show();
-                f.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
     }//GEN-LAST:event_jMenu4MouseClicked
 
     private void buttonImageReflection4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection4ActionPerformed
@@ -720,6 +641,29 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonImageReflection6ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        if (!f.isVisible()) {
+            try {
+                controlem.getData(f);
+                jDesktopPanetransparan1.add(f);
+                controlem.getData(f);
+                f.show();
+                f.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                controlem.getData(f);
+                f.show();
+                f.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -771,13 +715,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JSeparator jSeparator4;

@@ -208,7 +208,6 @@ public class Control_Alternatif {
                     JOptionPane.showMessageDialog(view, "Data Successfully Entry", "Success", JOptionPane.INFORMATION_MESSAGE);
                     getData(view);
                 }
-
             }
 
         } catch (Exception e) {

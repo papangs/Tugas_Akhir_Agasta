@@ -195,7 +195,6 @@
                     <LineBorder roundedCorners="true"/>
                   </Border>
                   <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
-                  <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>

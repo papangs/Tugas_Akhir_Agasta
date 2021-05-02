@@ -861,8 +861,10 @@ public class Control_Matrix_Alternatif {
                         + "kriteria_seq='" + view.jLabel9.getText() + "',\n"
                         + "kategori_seq='" + view.jLabel10.getText() + "',\n"
                         + "nilai='" + view.jTextField3.getText() + "'\n"
-                        + "where alternatif1_seq= '" + view.jLabel7.getText()+"'\n"
-                        + "AND alternatif2_seq= '" + view.jLabel8.getText()+"'";
+                        + "WHERE perbandingan_alternatif.kategori_seq = '" + view.jLabel10.getText() + "'\n"
+                        + "AND perbandingan_alternatif.kriteria_seq = '" + view.jLabel9.getText() + "'\n"
+                        + "AND perbandingan_alternatif.alternatif1_seq = '" + view.jLabel7.getText() + "'\n"
+                        + "AND perbandingan_alternatif.alternatif2_seq ='" + view.jLabel8.getText() + "'";
 
                 PreparedStatement p22 = c.prepareStatement(sql);
                 p22.executeUpdate();
