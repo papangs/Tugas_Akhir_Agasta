@@ -27,7 +27,11 @@ public class Control_UserAdmin {
     Statement s;
     
     public void getData(UserAdmin view){
+        view.jTextField1.setText("");
+        view.jPasswordField1.setText("");
+        view.jComboBox1.setSelectedItem("-PILIH-");
         view.jButton1.setText("Save");
+        view.jButton2.setVisible(false);
         view.jLabel1.setVisible(false);
         getDataUserAdmin(view);
     }
@@ -58,12 +62,12 @@ public class Control_UserAdmin {
                 byte[] decodedBytes = Base64.getDecoder().decode(r.getString("user.password"));
                 String decodedString = new String(decodedBytes);
 
-                if (!r.getString("user.akses").equals("Admin")) {
+//                if (!r.getString("user.akses").equals("Admin")) {
 
                     tabelKej.addRow(new Object[]{n++, r.getString("user.user_seq"),
                         r.getString("user.username"),
                         decodedString, r.getString("user.akses")});
-                }
+//                }
             }
 
             view.jTable1.setModel(tabelKej);
@@ -96,18 +100,19 @@ public class Control_UserAdmin {
                     JOptionPane.showMessageDialog(view, "Data Successfully Entry", "Success", JOptionPane.INFORMATION_MESSAGE);
                     getData(view);
                 
-                }else{
+                }else if (view.jButton1.getText().equals("Update")){
                     
                     String sql = "update user set \n"
                             + "username='" + view.jTextField1.getText() + "',"
-                            + "password='" + password + "'"
+                            + "password='" + password + "',"
+                            + "akses='" + view.jComboBox1.getSelectedItem() + "'"
                             + "where user_seq ='" + view.jLabel1.getText() + "'";
 
                     PreparedStatement p22 = c.prepareStatement(sql);
                     p22.executeUpdate();
                     p22.close();
 
-                    JOptionPane.showMessageDialog(view, "Data Not Successfully Entry", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, "Data Successfully Update", "Success", JOptionPane.INFORMATION_MESSAGE);
                     getData(view);
                     
                 }
@@ -117,34 +122,42 @@ public class Control_UserAdmin {
             JOptionPane.showMessageDialog(view, "Password Not Successful in Replace", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void readDataKategori(Alternatif view) {
+
+    public void readDataKategori(UserAdmin view) {
         int a = view.jTable1.getSelectedRow();
         String query = "SELECT\n"
-                + "kategori_alternatif.seq,\n"
-                + "kategori_alternatif.kategori_name\n"
+                + "user.user_seq, \n"
+                + "user.username, \n"
+                + "user.password, \n"
+                + "user.akses\n"
                 + "FROM\n"
-                + "kategori_alternatif\n"
-                + "WHERE kategori_alternatif.seq = '" + view.jTable2.getValueAt(a, 1) + "'";
+                + "user\n"
+                + "WHERE user.user_seq = '"+view.jTable1.getValueAt(a, 1)+"'";
         try {
-            
+
             Statement st = c.createStatement();
             ResultSet r = st.executeQuery(query);
 
-            String company_code = "";
-            String description = "";
+            int user_seq = 0;
+            String username = "";
+            String password = "";
+            String akses = "";
 
             while (r.next()) {
-                company_code = r.getString("kategori_alternatif.seq");
-                description = r.getString("kategori_alternatif.kategori_name");
+                user_seq = r.getInt("user.user_seq");
+                username = r.getString("user.username");
+                password = r.getString("user.password");
+                akses = r.getString("user.akses");
             }
-            
-            view.jLabel1.setText(company_code);
-            view.jTextField2.setText(description);
+
+            view.jLabel1.setText(user_seq+"");
+            view.jTextField1.setText(username);
+            view.jPasswordField1.setText(password);
+            view.jComboBox1.setSelectedItem(akses);
         } catch (Exception e) {
         }finally{
-            view.jButton2.setText("Update");
-            view.jButton6.setVisible(true);
+            view.jButton1.setText("Update");
+        view.jButton2.setVisible(true);
         }
     }
 }
