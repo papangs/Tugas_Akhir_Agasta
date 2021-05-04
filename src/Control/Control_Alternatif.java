@@ -7,6 +7,7 @@ package Control;
 
 import Connect.DBConnect;
 import Layout.Alternatif;
+import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -171,9 +173,10 @@ public class Control_Alternatif {
             view.jTable1.getColumnModel().getColumn(3).setMaxWidth(0);
             buatKolomSesuai(view.jTable1);
             resetData(view);
+            view.jTable1.setDefaultRenderer(Object.class, new tableColor());
         }
     }
-    
+
     public void saveDataKategori(Alternatif view) {
         try {
             if (view.jButton2.getText().equals("Save")) {
@@ -447,5 +450,29 @@ public class Control_Alternatif {
             }
         } catch (Exception e) {
         }
+    }
+    
+    public class tableColor extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+
+            String numero = (String) table.getValueAt(row, 2);
+
+            if (numero.equals("NVIDIA GTX1660 Super")) {
+                setBackground(Color.BLUE);
+                setForeground(Color.white);
+            } else {
+                setBackground(Color.white);
+                setForeground(Color.BLACK);
+            }
+
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+
     }
 }

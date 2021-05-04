@@ -62,12 +62,12 @@ public class Control_UserAdmin {
                 byte[] decodedBytes = Base64.getDecoder().decode(r.getString("user.password"));
                 String decodedString = new String(decodedBytes);
 
-//                if (!r.getString("user.akses").equals("Admin")) {
+                if (!r.getString("user.akses").equals("Superadmin")) {
 
                     tabelKej.addRow(new Object[]{n++, r.getString("user.user_seq"),
                         r.getString("user.username"),
                         decodedString, r.getString("user.akses")});
-//                }
+                }
             }
 
             view.jTable1.setModel(tabelKej);
@@ -158,6 +158,28 @@ public class Control_UserAdmin {
         }finally{
             view.jButton1.setText("Update");
         view.jButton2.setVisible(true);
+        }
+    }
+    
+    public void deleteDataUser(UserAdmin view) {
+        int yakin = JOptionPane.showConfirmDialog(view, "Are You Sure Want To Delete This data", "Delete", JOptionPane.YES_NO_OPTION);
+        if (yakin == JOptionPane.YES_OPTION) {
+            String sql = "delete from user where user_seq='" + view.jLabel1.getText() + "'";
+            try {
+                
+                PreparedStatement p22 = c.prepareStatement(sql);
+                p22.executeUpdate();
+                p22.close();
+
+                getData(view);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(view, "Data Not Succeed in Delete", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            } finally {
+            }
+        } else {
+            getData(view);
         }
     }
 }

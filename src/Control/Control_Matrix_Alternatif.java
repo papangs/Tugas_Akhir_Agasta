@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -650,7 +651,7 @@ public class Control_Matrix_Alternatif {
             } else if (jum == 1) {
                 JOptionPane.showMessageDialog(view, "CR Value Is Consistent!", "Correct", JOptionPane.INFORMATION_MESSAGE);
             } else if (hasilCI < 0.1) {
-                view.buttonGlass3.setForeground(Color.YELLOW);
+                view.buttonGlass3.setForeground(Color.BLUE);
                 JOptionPane.showMessageDialog(view, "CR value is Consistent!\nThat is : " + view.buttonGlass3.getText() + "", "Correct", JOptionPane.INFORMATION_MESSAGE);
                 saveProccess(view);
             } else {
@@ -934,5 +935,29 @@ public class Control_Matrix_Alternatif {
             view.panelGlass2.setVisible(false);
             getPerbandinganAlternatif(view);
         }
+    }
+    
+    public class tableColor extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+
+            String numero = (String) table.getValueAt(row, 2);
+
+            if (numero.equals("NVIDIA GTX1660 Super")) {
+                setBackground(Color.BLUE);
+                setForeground(Color.white);
+            } else {
+                setBackground(Color.WHITE);
+                setForeground(Color.BLACK);
+            }
+
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+
     }
 }

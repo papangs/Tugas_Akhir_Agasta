@@ -6,7 +6,12 @@
 package Layout;
 
 import Control.Control_Alternatif;
+import java.awt.Color;
+import java.awt.Component;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -19,8 +24,29 @@ public class Alternatif extends javax.swing.JInternalFrame {
     public Alternatif() {
         initComponents();
         control = new Control_Alternatif();
+        
+//        jTable1.setDefaultRenderer(Object.class, new TableCellRenderer() {
+//            private DefaultTableCellRenderer DEFAULT_RENDERER = new DefaultTableCellRenderer();
+//
+//            @Override
+//            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//                Component c = DEFAULT_RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//                
+//                String numero = (String) table.getValueAt(row, 4);
+//
+//                if (numero.equals("Medium")) {
+//                    setBackground(Color.GREEN);
+//                    setForeground(Color.BLACK);
+//                }
+//
+//                //Add below code here
+//                return c;
+//            }
+//
+//        });
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
