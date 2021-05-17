@@ -11,10 +11,12 @@ import Layout.Perangkingan;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -315,7 +317,7 @@ public class Control_Perangkingan {
             }
             
         }
-//        saveData(view);
+        saveData(view);
 
     }
 
@@ -384,4 +386,192 @@ public class Control_Perangkingan {
 //        }
 //        return jumlah;
 //    }
+    
+    public void saveData(Perangkingan view) {
+
+        try {
+            int eigen = view.jTable3.getRowCount();
+
+            String sqlq = "DELETE from hasil_rangking WHERE kategori_seq = '" + view.jLabel2.getText() + "'";
+            PreparedStatement t = c.prepareStatement(sqlq);
+            t.executeUpdate();
+            t.close();
+
+            for (int i = 0; i < view.jTable2.getRowCount(); i++) {
+
+                String sql = "insert into hasil_rangking set alternatif_seq ='" + view.jTable2.getValueAt(i, 1) + "',"
+                        + "value = '" + view.jTable2.getValueAt(i, eigen + 3) + "',"
+                        + "rangking = '" + view.jTable2.getValueAt(i, eigen + 4) + "',"
+                        + "kategori_seq = '" + view.jLabel2.getText() + "'";
+
+                PreparedStatement p22 = c.prepareStatement(sql);
+                p22.executeUpdate();
+                p22.close();
+            }
+
+//            JOptionPane.showMessageDialog(view, "Data Successfully Entry", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            getDataSave(view);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Data Unsuccessful Entry", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void getDataSave(Perangkingan view) {
+        String query = "SELECT\n"
+                + "	hasil_rangking.seq, \n"
+                + "	hasil_rangking.alternatif_seq, \n"
+                + "	hasil_rangking.`value`, \n"
+                + "	hasil_rangking.rangking, \n"
+                + "	hasil_rangking.kategori_seq, \n"
+                + "	alternatif.alternatif_name, \n"
+                + "	kategori_alternatif.kategori_name\n"
+                + "FROM\n"
+                + "	hasil_rangking\n"
+                + "	INNER JOIN\n"
+                + "	alternatif\n"
+                + "	ON \n"
+                + "		hasil_rangking.alternatif_seq = alternatif.seq\n"
+                + "	INNER JOIN\n"
+                + "	kategori_alternatif\n"
+                + "	ON \n"
+                + "		alternatif.kategori_seq = kategori_alternatif.seq AND\n"
+                + "		hasil_rangking.kategori_seq = kategori_alternatif.seq\n"
+                + "	WHERE hasil_rangking.kategori_seq = '"+view.jLabel2.getText()+"'\n"
+                + "	ORDER BY hasil_rangking.rangking ASC";
+
+        jum11 = 0;
+
+        try {
+
+            Statement stat = c.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+            while (rs.next()) {
+                jum11 = jum11 + 1;
+            }
+
+            int aa = Integer.parseInt(jum11 + "");
+            int aaa = view.jTable3.getRowCount();
+
+            String[] c1 = new String[aaa + 1 + 1 + 1 + 1 + 1];
+
+            for (int i1 = 0; i1 < aaa; i1++) {
+                for (int i = 0; i < 1; i++) {
+                    c1[i] = "NO";
+                    c1[i + 1] = "Alternatif Seq";
+                    c1[i + 1 + 1] = "Alternatif";
+                    c1[i1 + 1 + 1 + 1] = (String) view.jTable3.getValueAt(i1, 2);
+                    c1[i1 + 1 + 1 + 1 + 1] = "Hasil";
+                    c1[i1 + 1 + 1 + 1 + 1 + 1] = "Rangking";
+                }
+            }
+
+            setttablematrix(view.jTable2, aa, c1);
+
+            //No
+            for (int i3 = 0; i3 < aa; i3++) {
+                view.jTable2.setValueAt(i3 + 1, i3, 0);
+            }
+
+            //set seq
+            String seq = "";
+            int e1 = 0;
+            try {
+                Statement stat11 = c.createStatement();
+                ResultSet res11 = stat11.executeQuery(query);
+                while (res11.next()) {
+                    seq = res11.getString("hasil_rangking.alternatif_seq");
+                    view.jTable2.setValueAt(seq, e1++, 1);
+                }
+            } catch (SQLException f) {
+            }
+
+            //set nama
+            String nama = "";
+            int e = 0;
+            try {
+                Statement stat11 = c.createStatement();
+                ResultSet res11 = stat11.executeQuery(query);
+                while (res11.next()) {
+                    nama = res11.getString("alternatif.alternatif_name");
+                    view.jTable2.setValueAt(nama, e++, 2);
+                }
+            } catch (SQLException f) {
+            }
+
+            //nilai
+            for (int i2 = 0; i2 < aaa; i2++) {
+
+                String nilai = "";
+                String taun = "";
+
+                String sql2 = "SELECT\n"
+                        + "eigen_alternatif.seq, \n"
+                        + "eigen_alternatif.eigen_value, \n"
+                        + "eigen_alternatif.date, \n"
+                        + "eigen_alternatif.alternatif_seq, \n"
+                        + "eigen_alternatif.kategori_seq, \n"
+                        + "eigen_alternatif.kriteria_seq, \n"
+                        + "alternatif.alternatif_name, \n"
+                        + "kriteria.kriteria_name, \n"
+                        + "kategori_alternatif.kategori_name\n"
+                        + "FROM\n"
+                        + "eigen_alternatif\n"
+                        + "INNER JOIN alternatif ON eigen_alternatif.alternatif_seq = alternatif.seq\n"
+                        + "INNER JOIN kriteria ON eigen_alternatif.kriteria_seq = kriteria.seq\n"
+                        + "INNER JOIN kategori_alternatif ON alternatif.kategori_seq = kategori_alternatif.seq AND eigen_alternatif.kategori_seq = kategori_alternatif.seq\n"
+                        + "WHERE eigen_alternatif.kategori_seq = '" + view.jLabel2.getText() + "'\n"
+                        + "AND eigen_alternatif.kriteria_seq = '" + view.jTable3.getValueAt(i2, 1) + "'\n"
+                        + "GROUP BY eigen_alternatif.alternatif_seq";
+
+                try {
+                    Statement stat3 = c.createStatement();
+                    ResultSet res3 = stat3.executeQuery(sql2);
+                    int dd = 0;
+                    int baris = 0;
+                    while (res3.next()) {
+
+                        nilai = res3.getString("eigen_alternatif.eigen_value");
+                        dd = dd + 1;
+
+                        view.jTable2.setValueAt(nilai, dd - 1, i2 + 3);
+                    }
+                } catch (SQLException g) {
+                }
+            }
+            
+            //set nilai rangking
+            String nilairangking = "";
+            int fs = 0;
+            try {
+                Statement stat11 = c.createStatement();
+                ResultSet res11 = stat11.executeQuery(query);
+                while (res11.next()) {
+                    nilairangking = res11.getString("hasil_rangking.value");
+                    view.jTable2.setValueAt(nilairangking, fs++, aaa + 3);
+                }
+            } catch (SQLException f) {
+            }
+            
+            //set rangking
+            int rangking = 0;
+            int g = 0;
+            try {
+                Statement stat11 = c.createStatement();
+                ResultSet res11 = stat11.executeQuery(query);
+                while (res11.next()) {
+                    rangking = res11.getInt("hasil_rangking.rangking");
+                    view.jTable2.setValueAt(rangking, g++, aaa + 4);
+                }
+            } catch (SQLException f) {
+            }
+        } catch (SQLException e) {
+        } finally {
+            buatKolomSesuai(view.jTable2);
+            view.jTable2.getColumnModel().getColumn(1).setMinWidth(0);
+            view.jTable2.getColumnModel().getColumn(1).setMaxWidth(0);
+        }
+
+    }
 }
