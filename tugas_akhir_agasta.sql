@@ -11,7 +11,7 @@
  Target Server Version : 100418
  File Encoding         : 65001
 
- Date: 04/05/2021 17:18:15
+ Date: 18/05/2021 05:58:03
 */
 
 SET NAMES utf8mb4;
@@ -400,6 +400,27 @@ INSERT INTO `eigen_kriteria` VALUES (3, '0.225', '2021-05-02', 3);
 INSERT INTO `eigen_kriteria` VALUES (4, '0.109', '2021-05-02', 4);
 INSERT INTO `eigen_kriteria` VALUES (5, '0.196', '2021-05-02', 5);
 INSERT INTO `eigen_kriteria` VALUES (6, '0.126', '2021-05-02', 6);
+
+-- ----------------------------
+-- Table structure for hasil_rangking
+-- ----------------------------
+DROP TABLE IF EXISTS `hasil_rangking`;
+CREATE TABLE `hasil_rangking`  (
+  `seq` int NOT NULL AUTO_INCREMENT,
+  `alternatif_seq` int NULL DEFAULT NULL,
+  `value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `rangking` int NULL DEFAULT NULL,
+  `kategori_seq` int NULL DEFAULT NULL,
+  PRIMARY KEY (`seq`) USING BTREE,
+  INDEX `fk_alter`(`alternatif_seq`) USING BTREE,
+  INDEX `fkkategori`(`kategori_seq`) USING BTREE,
+  CONSTRAINT `fk_alter` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fkkategori` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of hasil_rangking
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for kategori_alternatif
@@ -935,21 +956,21 @@ CREATE TABLE `perbandingan_kriteria`  (
 -- ----------------------------
 -- Records of perbandingan_kriteria
 -- ----------------------------
-INSERT INTO `perbandingan_kriteria` VALUES (1, 1, 2, 1, '5');
-INSERT INTO `perbandingan_kriteria` VALUES (2, 1, 3, 3, '3');
+INSERT INTO `perbandingan_kriteria` VALUES (1, 1, 2, 2, '1');
+INSERT INTO `perbandingan_kriteria` VALUES (2, 1, 3, 3, '5');
 INSERT INTO `perbandingan_kriteria` VALUES (3, 1, 4, 1, '8');
-INSERT INTO `perbandingan_kriteria` VALUES (4, 1, 5, 5, '6');
-INSERT INTO `perbandingan_kriteria` VALUES (5, 1, 6, 1, '9');
-INSERT INTO `perbandingan_kriteria` VALUES (6, 2, 3, 2, '6');
-INSERT INTO `perbandingan_kriteria` VALUES (7, 2, 4, 4, '4');
-INSERT INTO `perbandingan_kriteria` VALUES (8, 2, 5, 2, '4');
-INSERT INTO `perbandingan_kriteria` VALUES (9, 2, 6, 2, '3');
-INSERT INTO `perbandingan_kriteria` VALUES (10, 3, 4, 3, '1');
-INSERT INTO `perbandingan_kriteria` VALUES (11, 3, 5, 5, '3');
-INSERT INTO `perbandingan_kriteria` VALUES (12, 3, 6, 3, '8');
-INSERT INTO `perbandingan_kriteria` VALUES (13, 4, 5, 5, '4');
-INSERT INTO `perbandingan_kriteria` VALUES (14, 4, 6, 6, '9');
-INSERT INTO `perbandingan_kriteria` VALUES (15, 5, 6, 5, '6');
+INSERT INTO `perbandingan_kriteria` VALUES (4, 1, 5, 1, '6');
+INSERT INTO `perbandingan_kriteria` VALUES (5, 1, 6, 6, '1');
+INSERT INTO `perbandingan_kriteria` VALUES (6, 2, 3, 2, '2');
+INSERT INTO `perbandingan_kriteria` VALUES (7, 2, 4, 4, '3');
+INSERT INTO `perbandingan_kriteria` VALUES (8, 2, 5, 2, '1');
+INSERT INTO `perbandingan_kriteria` VALUES (9, 2, 6, 2, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (10, 3, 4, 3, '9');
+INSERT INTO `perbandingan_kriteria` VALUES (11, 3, 5, 3, '2');
+INSERT INTO `perbandingan_kriteria` VALUES (12, 3, 6, 6, '2');
+INSERT INTO `perbandingan_kriteria` VALUES (13, 4, 5, 5, '5');
+INSERT INTO `perbandingan_kriteria` VALUES (14, 4, 6, 4, '7');
+INSERT INTO `perbandingan_kriteria` VALUES (15, 5, 6, 6, '3');
 
 -- ----------------------------
 -- Table structure for random_index
@@ -999,7 +1020,7 @@ CREATE TABLE `user`  (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'admin', 'YWRtaW4=', 'Admin');
-INSERT INTO `user` VALUES (2, 'user', 'V2tab1QySkhUbTVRVkRBOQ==', 'User');
+INSERT INTO `user` VALUES (2, 'user', 'dXNlcg==', 'User');
 INSERT INTO `user` VALUES (5, 'as', 'YXM=', 'Superadmin');
 
 SET FOREIGN_KEY_CHECKS = 1;
