@@ -5,59 +5,33 @@
  */
 package Layout;
 
-import Control.Control_Alternatif_Kriteria;
-import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
+import Control.Control_Graph;
+import Control.Control_UserAdmin;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import javax.swing.UIManager;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYDatasetTableModel;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 /**
  *
  * @author Irawan Papang S
  */
-public class Graphh extends javax.swing.JDialog {
+public class Graphh extends javax.swing.JInternalFrame {
 
+    Control_Graph control_Graph;
     
-    public Graphh(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Graphh() {
         initComponents();
-    }
-
-    public void generateChart(Alternatif_Kriteria view) {
-        try {
-            DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-            
-            XYDatasetTableModel data = new XYDatasetTableModel();
-            
-            for (int i = 0; i < view.jTable3.getRowCount(); i++) {
-                Date tahun = (Date) view.jTable3.getValueAt(i, 6);
-                dataSet.addValue((Number) view.jTable3.getValueAt(i, 2), "MIM", tahun);
-                dataSet.addValue((Number) view.jTable3.getValueAt(i, 1), "AVARAGE", tahun);
-                dataSet.addValue((Number) view.jTable3.getValueAt(i, 3), "MAX", tahun);
-            }
-
-            JFreeChart chart = null;
-            chart = ChartFactory.createLineChart("Line", "Tanggal", "Range", dataSet, PlotOrientation.VERTICAL, true, false, true);
-//            chart = ChartFactory.createLineChart3D("Line", "Tanggal", "Range", dataSet, PlotOrientation.VERTICAL, true, true, true);
-//            chart = ChartFactory.createXYLineChart("Line", "Tanggal", "Range", (XYDataset) dataSet, PlotOrientation.VERTICAL, true, true, true);
-                    
-            Calendar rightNow = Calendar.getInstance();
-            String fName = "chart" + String.valueOf(rightNow.getTimeInMillis()) + ".jpg";
-            ChartUtilities.saveChartAsJPEG(new File(fName), chart, 722, 448);
-            jLabel1.setIcon(null);
-            jLabel1.setIcon(new ImageIcon(fName));
-        } catch (IOException ex) {
-        }
-
+        control_Graph = new Control_Graph();
+        grafikbar(this);
     }
 
     /**
@@ -69,14 +43,69 @@ public class Graphh extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jDesktopPaneGambar1 = new Background.JDesktopPaneGambar();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Table Saaty", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Grafik"));
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Klik pada baris untuk melihat detail penjelasan");
+
+        jLabel2.setText("Kategori : ");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-PILIH-" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("jLabel2");
+
+        jDesktopPaneGambar1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPaneGambar1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPaneGambar1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPaneGambar1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPaneGambar1.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPaneGambar1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPaneGambar1Layout = new javax.swing.GroupLayout(jDesktopPaneGambar1);
         jDesktopPaneGambar1.setLayout(jDesktopPaneGambar1Layout);
@@ -84,67 +113,108 @@ public class Graphh extends javax.swing.JDialog {
             jDesktopPaneGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPaneGambar1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                .addGroup(jDesktopPaneGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDesktopPaneGambar1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jDesktopPaneGambar1Layout.setVerticalGroup(
             jDesktopPaneGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPaneGambar1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addGroup(jDesktopPaneGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         getContentPane().add(jDesktopPaneGambar1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(758, 509));
-        setLocationRelativeTo(null);
+        setBounds(0, 0, 886, 587);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        control_Graph.detail_saaty(this);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        // TODO add your handling code here:
+        jTable1MouseClicked(null);
+    }//GEN-LAST:event_jTable1KeyReleased
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        control_Graph.KategoriCode(this);
+        grafikbar(this);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    public void grafikbar(Graphh view) {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Graphh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Graphh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Graphh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Graphh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            String query = "SELECT\n"
+                    + "alternatif.alternatif_name,\n"
+                    + "hasil_rangking.value as Nilai\n"
+                    + "FROM\n"
+                    + "hasil_rangking\n"
+                    + "INNER JOIN alternatif ON hasil_rangking.alternatif_seq = alternatif.seq\n"
+                    + "WHERE hasil_rangking.kategori_seq = '"+view.jLabel3.getText()+"'";
+
+            JDBCCategoryDataset data = new JDBCCategoryDataset("jdbc:mysql://localhost/tugas_akhir_agasta", "com.mysql.jdbc.Driver", "root", "");
+            data.executeQuery(query);
+            JFreeChart chart = ChartFactory.createBarChart("Grafik", "Alternatif", "Jumlah Nilai", data, PlotOrientation.HORIZONTAL, true, true, false);
+            CategoryPlot bar = chart.getCategoryPlot();
+            bar.setBackgroundPaint(Color.WHITE);
+            bar.setRangeGridlinePaint(Color.BLACK);
+
+            final NumberAxis rangeAxis = (NumberAxis) bar.getRangeAxis();
+            rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+            BarRenderer renderer = (BarRenderer) bar.getRenderer();
+            renderer.setDrawBarOutline(false);
+
+            final GradientPaint gp0 = new GradientPaint(
+                    0.0f, 0.0f, Color.CYAN,
+                    0.0f, 0.0f, Color.DARK_GRAY
+            );
+
+            renderer.setSeriesPaint(0, gp0);
+
+            ChartPanel barpanel = new ChartPanel(chart);
+            view.jPanel1.setVisible(true);
+            view.jPanel1.removeAll();
+            view.jPanel1.add(barpanel, BorderLayout.CENTER);
+            view.jPanel1.validate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
         }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Graphh dialog = new Graphh(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.ButtonGroup buttonGroup1;
+    public javax.swing.JComboBox<String> jComboBox1;
     private Background.JDesktopPaneGambar jDesktopPaneGambar1;
-    public javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

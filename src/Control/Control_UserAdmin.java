@@ -146,11 +146,15 @@ public class Control_UserAdmin {
             while (r.next()) {
                 user_seq = r.getInt("user.user_seq");
                 username = r.getString("user.username");
-                password = r.getString("user.password");
+
+                byte[] decodedBytes = Base64.getDecoder().decode(r.getString("user.password"));
+                String decodedString = new String(decodedBytes);
+
+                password = decodedString;
                 akses = r.getString("user.akses");
             }
 
-            view.jLabel1.setText(user_seq+"");
+            view.jLabel1.setText(user_seq + "");
             view.jTextField1.setText(username);
             view.jPasswordField1.setText(password);
             view.jComboBox1.setSelectedItem(akses);

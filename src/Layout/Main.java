@@ -10,6 +10,7 @@ import Control.Control_Kriteria;
 import Control.Control_Main;
 import Control.Control_UserAdmin;
 import Control.Control_Alternatif_Kriteria;
+import Control.Control_Graph;
 import Control.Control_Matrix_Alternatif;
 import Control.Control_Matrix_Kriteria;
 import Control.Control_Perangkingan;
@@ -32,7 +33,7 @@ public class Main extends javax.swing.JFrame {
     java.util.Date tglsekarang = new java.util.Date();
     private SimpleDateFormat smpdtfmt = new SimpleDateFormat("dd MMMMMMMMM yyyy", Locale.getDefault());
     private String tanggal = smpdtfmt.format(tglsekarang);
-    
+
     Control_Kriteria control;
     Control_Alternatif controla;
     Control_UserAdmin controlem;
@@ -41,7 +42,8 @@ public class Main extends javax.swing.JFrame {
     Control_Matrix_Kriteria controlm;
     Control_Perangkingan controlp;
     Control_Matrix_Alternatif controlal;
-    
+    Control_Graph controlg;
+
     Kriteria a;
     Alternatif_Kriteria b;
     Alternatif c;
@@ -49,14 +51,15 @@ public class Main extends javax.swing.JFrame {
     Matrix_Kriteria m;
     Perangkingan p;
     Matrix_Alternatif al;
-    
+    Graphh j;
+
     public Main() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        
+
         setJam();
         jLabel6.setText(tanggal);
-        
+
         a = new Kriteria();
         b = new Alternatif_Kriteria();
         c = new Alternatif();
@@ -64,7 +67,8 @@ public class Main extends javax.swing.JFrame {
         m = new Matrix_Kriteria();
         p = new Perangkingan();
         al = new Matrix_Alternatif();
-        
+        j = new Graphh();
+
         control = new Control_Kriteria();
         controla = new Control_Alternatif();
         controlem = new Control_UserAdmin();
@@ -72,10 +76,11 @@ public class Main extends javax.swing.JFrame {
         controlm = new Control_Matrix_Kriteria();
         controlp = new Control_Perangkingan();
         controlal = new Control_Matrix_Alternatif();
-        
+        controlg = new Control_Graph();
+
 //        buttonImageReflection2.setVisible(false);
     }
-    
+
     public final void setJam() {
         ActionListener taskPerformer = new ActionListener() {
 
@@ -107,18 +112,91 @@ public class Main extends javax.swing.JFrame {
         };
         new javax.swing.Timer(1000, taskPerformer).start();
     }
-    
+
     public void panggil(String userlogin) {
         switch (userlogin) {
             case "User":
                 enable(true);
+
+                if (!j.isVisible()) {
+                    try {
+                        jDesktopPanetransparan1.add(j);
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
                 break;
             case "Admin":
                 enable(false);
+
+                if (!j.isVisible()) {
+                    try {
+                        jDesktopPanetransparan1.add(j);
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+            case "Superadmin":
+                enable(false);
+
+                if (!j.isVisible()) {
+                    try {
+                        jDesktopPanetransparan1.add(j);
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        j.show();
+                        controlg.getData(j);
+                        j.setClosable(false);
+                        j.setMaximum(true);
+                        j.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
         }
     }
-    
+
     public void enable(boolean status) {
         jMenu4.setVisible(!status);
         buttonImageReflection1.setVisible(!status);
@@ -126,6 +204,7 @@ public class Main extends javax.swing.JFrame {
         buttonImageReflection3.setVisible(!status);
         buttonImageReflection4.setVisible(!status);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,6 +222,7 @@ public class Main extends javax.swing.JFrame {
         buttonImageReflection4 = new usu.widget.glass.ButtonImageReflection();
         buttonImageReflection5 = new usu.widget.glass.ButtonImageReflection();
         buttonImageReflection6 = new usu.widget.glass.ButtonImageReflection();
+        buttonImageReflection7 = new usu.widget.glass.ButtonImageReflection();
         jSeparator4 = new javax.swing.JSeparator();
         panelGlass2 = new usu.widget.glass.PanelGlass();
         jLabel1 = new javax.swing.JLabel();
@@ -233,6 +313,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        buttonImageReflection7.setForeground(new java.awt.Color(0, 0, 0));
+        buttonImageReflection7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/iconfinder_118770_home_icon_512px.png"))); // NOI18N
+        buttonImageReflection7.setText("Home");
+        buttonImageReflection7.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
+        buttonImageReflection7.setName(""); // NOI18N
+        buttonImageReflection7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonImageReflection7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelGlass1Layout = new javax.swing.GroupLayout(panelGlass1);
         panelGlass1.setLayout(panelGlass1Layout);
         panelGlass1Layout.setHorizontalGroup(
@@ -245,7 +336,8 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(buttonImageReflection6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(buttonImageReflection2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(buttonImageReflection4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonImageReflection5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(buttonImageReflection5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonImageReflection7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(panelGlass1Layout.createSequentialGroup()
                         .addComponent(buttonImageReflection1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,6 +348,8 @@ public class Main extends javax.swing.JFrame {
             panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGlass1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(buttonImageReflection7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelGlass1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonImageReflection1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonImageReflection3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -267,7 +361,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(buttonImageReflection6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonImageReflection5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
@@ -576,7 +670,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenu4MouseClicked
 
     private void buttonImageReflection4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection4ActionPerformed
@@ -668,6 +762,28 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void buttonImageReflection7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageReflection7ActionPerformed
+        // TODO add your handling code here:
+        if (!j.isVisible()) {
+            try {
+                jDesktopPanetransparan1.add(j);
+                j.show();
+                controlg.getData(j);
+                j.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                j.show();
+                controlg.getData(j);
+                j.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_buttonImageReflection7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -710,6 +826,7 @@ public class Main extends javax.swing.JFrame {
     private usu.widget.glass.ButtonImageReflection buttonImageReflection4;
     private usu.widget.glass.ButtonImageReflection buttonImageReflection5;
     private usu.widget.glass.ButtonImageReflection buttonImageReflection6;
+    private usu.widget.glass.ButtonImageReflection buttonImageReflection7;
     private Background.JDesktopPaneGambar jDesktopPaneGambar1;
     public Background.JDesktopPanetransparan jDesktopPanetransparan1;
     private javax.swing.JLabel jLabel1;
