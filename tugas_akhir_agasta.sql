@@ -11,7 +11,7 @@
  Target Server Version : 100418
  File Encoding         : 65001
 
- Date: 18/05/2021 05:58:03
+ Date: 18/06/2021 20:36:33
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `alternatif`;
 CREATE TABLE `alternatif`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
   `alternatif_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `kategori_seq` int NULL DEFAULT NULL,
+  `kategori_seq` int(255) NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkategoriseq`(`kategori_seq`) USING BTREE,
   CONSTRAINT `fkkategoriseq` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of alternatif
@@ -62,9 +62,9 @@ INSERT INTO `alternatif` VALUES (23, 'AMD RX VEGA 64', 3);
 -- ----------------------------
 DROP TABLE IF EXISTS `alternatif_kriteria`;
 CREATE TABLE `alternatif_kriteria`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
-  `kriteria_seq` int NULL DEFAULT NULL,
-  `alternatif_seq` int NULL DEFAULT NULL,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `kriteria_seq` int(11) NULL DEFAULT NULL,
+  `alternatif_seq` int(11) NULL DEFAULT NULL,
   `content_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkriteria`(`kriteria_seq`) USING BTREE,
@@ -220,12 +220,12 @@ INSERT INTO `alternatif_kriteria` VALUES (138, 6, 23, 'Rp5,200,000');
 -- ----------------------------
 DROP TABLE IF EXISTS `eigen_alternatif`;
 CREATE TABLE `eigen_alternatif`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
   `eigen_value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `alternatif_seq` int NULL DEFAULT NULL,
-  `kategori_seq` int NULL DEFAULT NULL,
-  `kriteria_seq` int NULL DEFAULT NULL,
+  `alternatif_seq` int(11) NULL DEFAULT NULL,
+  `kategori_seq` int(11) NULL DEFAULT NULL,
+  `kriteria_seq` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkriteria_seq`(`alternatif_seq`) USING BTREE,
   INDEX `fkkategoriseq1`(`kategori_seq`) USING BTREE,
@@ -233,7 +233,7 @@ CREATE TABLE `eigen_alternatif`  (
   CONSTRAINT `fkalternatifseq` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fkkategoriseq1` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fkkriteriaseq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 395 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 395 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of eigen_alternatif
@@ -382,14 +382,14 @@ INSERT INTO `eigen_alternatif` VALUES (394, '0.124', '2021-05-04', 13, 1, 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `eigen_kriteria`;
 CREATE TABLE `eigen_kriteria`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
   `eigen_value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `kriteria_seq` int NULL DEFAULT NULL,
+  `kriteria_seq` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fkkriteria_seq`(`kriteria_seq`) USING BTREE,
   CONSTRAINT `fkkriteria_seq` FOREIGN KEY (`kriteria_seq`) REFERENCES `kriteria` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of eigen_kriteria
@@ -406,31 +406,54 @@ INSERT INTO `eigen_kriteria` VALUES (6, '0.126', '2021-05-02', 6);
 -- ----------------------------
 DROP TABLE IF EXISTS `hasil_rangking`;
 CREATE TABLE `hasil_rangking`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
-  `alternatif_seq` int NULL DEFAULT NULL,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
+  `alternatif_seq` int(11) NULL DEFAULT NULL,
   `value` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `rangking` int NULL DEFAULT NULL,
-  `kategori_seq` int NULL DEFAULT NULL,
+  `rangking` int(11) NULL DEFAULT NULL,
+  `kategori_seq` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   INDEX `fk_alter`(`alternatif_seq`) USING BTREE,
   INDEX `fkkategori`(`kategori_seq`) USING BTREE,
   CONSTRAINT `fk_alter` FOREIGN KEY (`alternatif_seq`) REFERENCES `alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fkkategori` FOREIGN KEY (`kategori_seq`) REFERENCES `kategori_alternatif` (`seq`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hasil_rangking
 -- ----------------------------
+INSERT INTO `hasil_rangking` VALUES (40, 12, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (41, 14, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (42, 15, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (43, 16, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (44, 17, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (45, 18, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (46, 19, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (47, 20, '0.125', 1, 2);
+INSERT INTO `hasil_rangking` VALUES (48, 1, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (49, 3, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (50, 7, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (51, 11, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (52, 21, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (53, 22, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (54, 23, '0.143', 1, 3);
+INSERT INTO `hasil_rangking` VALUES (55, 2, '0.124', 3, 1);
+INSERT INTO `hasil_rangking` VALUES (56, 4, '0.13', 2, 1);
+INSERT INTO `hasil_rangking` VALUES (57, 5, '0.131', 1, 1);
+INSERT INTO `hasil_rangking` VALUES (58, 6, '0.123', 6, 1);
+INSERT INTO `hasil_rangking` VALUES (59, 8, '0.122', 7, 1);
+INSERT INTO `hasil_rangking` VALUES (60, 9, '0.124', 3, 1);
+INSERT INTO `hasil_rangking` VALUES (61, 10, '0.122', 7, 1);
+INSERT INTO `hasil_rangking` VALUES (62, 13, '0.124', 3, 1);
 
 -- ----------------------------
 -- Table structure for kategori_alternatif
 -- ----------------------------
 DROP TABLE IF EXISTS `kategori_alternatif`;
 CREATE TABLE `kategori_alternatif`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
   `kategori_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kategori_alternatif
@@ -444,10 +467,10 @@ INSERT INTO `kategori_alternatif` VALUES (3, 'Low End');
 -- ----------------------------
 DROP TABLE IF EXISTS `kriteria`;
 CREATE TABLE `kriteria`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
+  `seq` int(11) NOT NULL AUTO_INCREMENT,
   `kriteria_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kriteria
@@ -464,15 +487,15 @@ INSERT INTO `kriteria` VALUES (6, 'Harga');
 -- ----------------------------
 DROP TABLE IF EXISTS `perbandingan_alternatif`;
 CREATE TABLE `perbandingan_alternatif`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
-  `alternatif1_seq` int NULL DEFAULT NULL,
-  `alternatif2_seq` int NULL DEFAULT NULL,
-  `kategori_seq` int NULL DEFAULT NULL,
-  `pilihan_alternatif_seq` int NULL DEFAULT NULL,
-  `kriteria_seq` int NULL DEFAULT NULL,
+  `seq` int(255) NOT NULL AUTO_INCREMENT,
+  `alternatif1_seq` int(11) NULL DEFAULT NULL,
+  `alternatif2_seq` int(11) NULL DEFAULT NULL,
+  `kategori_seq` int(11) NULL DEFAULT NULL,
+  `pilihan_alternatif_seq` int(11) NULL DEFAULT NULL,
+  `kriteria_seq` int(11) NULL DEFAULT NULL,
   `nilai` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2132 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2132 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of perbandingan_alternatif
@@ -945,13 +968,13 @@ INSERT INTO `perbandingan_alternatif` VALUES (2131, 10, 13, 1, 13, 1, '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `perbandingan_kriteria`;
 CREATE TABLE `perbandingan_kriteria`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
-  `kriteria1_seq` int NULL DEFAULT NULL,
-  `kriteria2_seq` int NULL DEFAULT NULL,
-  `pilihan_kriteria_seq` int NULL DEFAULT NULL,
+  `seq` int(255) NOT NULL AUTO_INCREMENT,
+  `kriteria1_seq` int(11) NULL DEFAULT NULL,
+  `kriteria2_seq` int(11) NULL DEFAULT NULL,
+  `pilihan_kriteria_seq` int(11) NULL DEFAULT NULL,
   `nilai` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of perbandingan_kriteria
@@ -977,13 +1000,13 @@ INSERT INTO `perbandingan_kriteria` VALUES (15, 5, 6, 6, '3');
 -- ----------------------------
 DROP TABLE IF EXISTS `random_index`;
 CREATE TABLE `random_index`  (
-  `seq` int NOT NULL AUTO_INCREMENT,
-  `size_matrics` int NOT NULL,
+  `seq` int(200) NOT NULL AUTO_INCREMENT,
+  `size_matrics` int(200) NOT NULL,
   `random_consistency` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
   UNIQUE INDEX `Ukuran_Matriks`(`size_matrics`) USING BTREE,
   UNIQUE INDEX `Ukuran_Matriks_2`(`size_matrics`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of random_index
@@ -1005,22 +1028,49 @@ INSERT INTO `random_index` VALUES (15, 14, '1.57');
 INSERT INTO `random_index` VALUES (16, 15, '1.59');
 
 -- ----------------------------
+-- Table structure for skala_saaty
+-- ----------------------------
+DROP TABLE IF EXISTS `skala_saaty`;
+CREATE TABLE `skala_saaty`  (
+  `id_saaty` int(20) NOT NULL AUTO_INCREMENT,
+  `Intensitas_Kepentingan` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Definisi` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Penjelasan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  PRIMARY KEY (`id_saaty`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of skala_saaty
+-- ----------------------------
+INSERT INTO `skala_saaty` VALUES (1, '1', 'Pentingnya sama', 'Dua elemen mempunyai pengaruh yang sama besar \nterhadap tujuan');
+INSERT INTO `skala_saaty` VALUES (2, '2', 'Lemah atau sedikit', '');
+INSERT INTO `skala_saaty` VALUES (3, '3', 'Sedang penting', 'Pengalaman dan penilaian sedikit menyokong \nsatu elemen dibandingkan elemen yang lainnya');
+INSERT INTO `skala_saaty` VALUES (4, '4', 'Sedang lebih penting', '');
+INSERT INTO `skala_saaty` VALUES (5, '5', 'Kuat penting', 'Pengalaman dan penilaian sangat kuat menyokong \nsatu elemen dibandingkan elemen yang lainnya');
+INSERT INTO `skala_saaty` VALUES (6, '6', 'Tambah kuat', '');
+INSERT INTO `skala_saaty` VALUES (7, '7', 'Sangat kuat atau menunjukkan pentingnya', 'Satu elemen yang kuat di sokong dan dominan terlihat \ndalam praktek');
+INSERT INTO `skala_saaty` VALUES (8, '8', 'Sangat, sangat kuat', '');
+INSERT INTO `skala_saaty` VALUES (9, '9', 'Ekstrim pentingnya', 'Bukti yang mendukung elemen yang satu \nterhadap elemen lain memiliki tingkat penegasan tertinggi \nyang mungkin menguatkan');
+INSERT INTO `skala_saaty` VALUES (10, 'Kebalikan di atas\n', 'Jika aktifitas i mendapat satu angka dibanding aktifitas j, maka j mempunyai nilai kebalikkannya dibanding dengan i', 'Nilai ini diberikan bila ada dua kompromi diantara 2 pilihan');
+INSERT INTO `skala_saaty` VALUES (11, '1.1-1.9', 'Jika kegiatan yang sangat dekat', 'Mungkin sulit untuk menetapkan nilai terbaik tapi bila dibandingkan dengan kegiatan lain yang kontras ukuran angka kecil tidak akan terlalu\r\nterlihat, namun mereka masih bisa menunjukkan\r\nrelatif pentingnya kegiatan.\r\n');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `user_seq` int NOT NULL AUTO_INCREMENT,
+  `user_seq` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `akses` enum('Admin','User','Superadmin') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_seq`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'admin', 'YWRtaW4=', 'Admin');
-INSERT INTO `user` VALUES (2, 'user', 'dXNlcg==', 'User');
+INSERT INTO `user` VALUES (2, 'tes', 'dXNlcg==', 'User');
 INSERT INTO `user` VALUES (5, 'as', 'YXM=', 'Superadmin');
 
 SET FOREIGN_KEY_CHECKS = 1;
